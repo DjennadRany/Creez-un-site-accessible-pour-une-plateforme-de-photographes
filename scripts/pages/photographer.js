@@ -11,7 +11,7 @@ function incrementPhotographerInfo(photographer) {
   infoWrapper.classList.add('info-wrapper');
 
 
-  
+
   const nameElement = document.createElement('h2');
   nameElement.textContent = photographer.name;
 
@@ -20,39 +20,39 @@ function incrementPhotographerInfo(photographer) {
 
   const countryElement = document.createElement('p');
   countryElement.textContent = `  ${photographer.city}, ${photographer.country} `;
-
+  countryElement.classList.add('city');
   const taglineElement = document.createElement('p');
+  taglineElement.classList.add('taglin');
   taglineElement.textContent = `${photographer.tagline}`;
 
   const contactButton = document.createElement('button');
   contactButton.classList.add('contact_button');
   contactButton.textContent = 'Contactez-moi';
   contactButton.onclick = displayModal;
-  
 
- // Create the back button
- const backButton = document.createElement('button');
- backButton.textContent = 'Retour';
- backButton.classList.add('back-button');
- backButton.addEventListener('click', () => {
-   window.location.href = './';
- });
 
- // Append the back button to the photographer section
- const photographerSection = document.querySelector('.photograph-header');
- photographerSection.appendChild(backButton);
-  
+  // Create the back button
+  const backButton = document.createElement('button');
+  backButton.textContent = 'Retour';
+  backButton.classList.add('back-button');
+  backButton.addEventListener('click', () => {
+    window.location.href = './';
+  });
+
+  // Append the back button to the photographer section
+  const photographerSection = document.querySelector('.photograph-header');
+  photographerSection.appendChild(backButton);
+
   // Ajout des éléments dans la div info-wrapper
-  infoWrapper.appendChild(nameElement);
-  infoWrapper.appendChild(cityElement);
+  infoWrapper.appendChild(nameElement);;
   infoWrapper.appendChild(countryElement);
   infoWrapper.appendChild(taglineElement);
-  
-    // Création de l'élément pour afficher la photo du photographe
-    const portraitElement = document.createElement('img');
-    portraitElement.src = `assets/photographers/${photographer.portrait}`;
-    portraitElement.alt = photographer.name;
-    portraitElement.classList.add('portrait');
+
+  // Création de l'élément pour afficher la photo du photographe
+  const portraitElement = document.createElement('img');
+  portraitElement.src = `assets/photographers/${photographer.portrait}`;
+  portraitElement.alt = photographer.name;
+  portraitElement.classList.add('portrait');
 
   // Ajout des éléments à la div info-container
 
@@ -91,244 +91,301 @@ fetch('./data/photographers.json')
   });
 
 
-  async function getPhotographers() {
-    try {
-      const response = await fetch('./data/photographers.json');
-      if (!response.ok) {
-        throw new Error('Looks like there was a problem. Status Code: ' + response.status);
-      }
-      const data = await response.json();
-      console.log(data.photographers);
-  
-      // Get the photographer ID from the URL
-      const url = window.location.href;
-      const id = url.split("#")[1];
-      console.log(id);
-  
-      // Filter media based on photographer ID
-      const filteredMedia = data.media.filter(media => media.photographerId === parseInt(id));
-      console.log(filteredMedia);
-  
-      // Function to render a slide
-      function showSlide(index) {
-        const media = filteredMedia[index];
-  
-        const article = document.createElement('div');
-        article.classList.add('blockouf');
-        const figure = document.createElement('figure');
-        const title = document.createElement('h2');
-        const likes = document.createElement('span');
-        const date = document.createElement('span');
-        const price = document.createElement('span');
-  
-        title.textContent = media.title;
-        likes.textContent = 'Nombre de likes : ' + media.likes;
-        date.textContent = media.date;
-        price.textContent = media.price + ' €';
-  
-        if (media.image) {
-          const image = document.createElement('img');
-          image.src = `./assets/${media.photographerId}/${media.image}`;
-          image.alt = media.title;
-          figure.appendChild(image);
-        } else {
-          const blackSquare = document.createElement('div');
-          blackSquare.classList.add('black-square');
-  
-          const playIcon = document.createElement('span');
-          playIcon.classList.add('play-icon');
-          playIcon.textContent = '▶';
-  
-          blackSquare.appendChild(playIcon);
-          figure.appendChild(blackSquare);
-        }
-  
-        if (media.video && media.videoPoster) {
-          const video = document.createElement('video');
-          video.src = `./assets/${media.photographerId}/${media.video}`;
-          video.poster = `./assets/${media.photographerId}/${media.videoPoster}`;
-          video.alt = media.title;
-          figure.appendChild(video);
-        }
-  
-        article.appendChild(figure);
-        article.appendChild(title);
-        article.appendChild(likes);
-        article.appendChild(date);
-        article.appendChild(price);
-  
-        figure.addEventListener('click', () => {
-          openImageModal(index);
-        });
-  
-        const sliderContainer = document.querySelector('.photographer_section');
-        sliderContainer.appendChild(article);
-      }
-  
-      // Render all the slides
-      function renderSlides() {
-        const sliderContainer = document.querySelector('.photographer_section');
-        sliderContainer.innerHTML = '';
-  
-        filteredMedia.forEach((media, index) => {
-          showSlide(index);
-        });
-      }
-  
-      // Function to open the image modal
-      function openImageModal(index) {
-        const existingModal = document.querySelector('.image-modal');
-        if (existingModal) {
-          closeModal();
-        }
-  
-        const modal = document.createElement('div');
-        modal.classList.add('image-modal');
-  
-        const modalImage = document.createElement('img');
-        modalImage.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].image}`;
-        modalImage.alt = filteredMedia[index].title;
-  
-        const modalVideo = document.createElement('video');
-        modalVideo.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].video}`;
-        modalVideo.poster = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].videoPoster}`;
-        modalVideo.alt = filteredMedia[index].title;
-        modalVideo.controls = true;
-        modalVideo.autoplay = true;
-  
-        const prevButton = document.createElement('button');
-        prevButton.textContent = 'Précédent';
-        prevButton.classList.add('prev-button');
-        prevButton.addEventListener('click', () => {
-          const newIndex = (index - 1 + filteredMedia.length) % filteredMedia.length;
-          closeModal();
-          openImageModal(newIndex);
-        });
-  
-        const nextButton = document.createElement('button');
-        nextButton.textContent = 'Suivant';
-        nextButton.classList.add('next-button');
-        nextButton.addEventListener('click', () => {
-          const newIndex = (index + 1) % filteredMedia.length;
-          closeModal();
-          openImageModal(newIndex);
-        });
-  
-        const closeButton = document.createElement('button');
-        closeButton.textContent = 'Fermer';
-        closeButton.classList.add('close-button');
-        closeButton.addEventListener('click', () => {
-          closeModal();
-        });
-  
-        modal.appendChild(closeButton);
-        modal.appendChild(prevButton);
-        modal.appendChild(nextButton);
-  
-        if (filteredMedia[index].video) {
-          modal.appendChild(modalVideo);
-        } else {
-          modal.appendChild(modalImage);
-        }
-  
-        document.body.appendChild(modal);
-      }
-  
-      // Function to close the image modal
-      function closeModal() {
-        const modal = document.querySelector('.image-modal');
-        if (modal) {
-          modal.remove();
-        }
-      }
-    
+async function getPhotographers() {
+  try {
+    const response = await fetch('./data/photographers.json');
+    if (!response.ok) {
+      throw new Error('Looks like there was a problem. Status Code: ' + response.status);
+    }
+    const data = await response.json();
+    console.log(data.photographers);
 
-      // Add the filter section
-      function addFilterSection() {
-        // Handle filter change event
-        function handleFilterChange() {
-          const selectElement = document.getElementById('filter-select');
-          const selectedValue = selectElement.value;
-  
-          if (selectedValue === 'date') {
-            filterMediaByDate();
-          } else if (selectedValue === 'title') {
-            filterMediaByTitle();
-          } else if (selectedValue === 'popularity') {
-            filterMediaByPopularity();
-          }
-        }
-  
-        // Filter media by date
-        function filterMediaByDate() {
-          filteredMedia.sort((a, b) => new Date(a.date) - new Date(b.date));
-          renderSlides();
-        }
-  
-        // Filter media by title
-        function filterMediaByTitle() {
-          filteredMedia.sort((a, b) => a.title.localeCompare(b.title));
-          renderSlides();
-        }
-  
-        // Filter media by popularity
-        function filterMediaByPopularity() {
-          filteredMedia.sort((a, b) => b.likes - a.likes);
-          renderSlides();
-        }
-  
-        // Create filter section elements
-        const filterSection = document.createElement('div');
-        filterSection.classList.add('filter-section');
-  
-        const filterLabel = document.createElement('label');
-        filterLabel.setAttribute('for', 'filter-select');
-        filterLabel.textContent = 'Filtrer par :';
-  
-        const filterSelect = document.createElement('select');
-        filterSelect.setAttribute('id', 'filter-select');
-  
-        const dateOption = document.createElement('option');
-        dateOption.setAttribute('value', 'date');
-        dateOption.textContent = 'Date';
-  
-        const titleOption = document.createElement('option');
-        titleOption.setAttribute('value', 'title');
-        titleOption.textContent = 'Titre';
-  
-        const popularityOption = document.createElement('option');
-        popularityOption.setAttribute('value', 'popularity');
-        popularityOption.textContent = 'Popularité';
-  
-        filterSelect.appendChild(dateOption);
-        filterSelect.appendChild(titleOption);
-        filterSelect.appendChild(popularityOption);
-  
-        filterSection.appendChild(filterLabel);
-        filterSection.appendChild(filterSelect);
-  
-        // Insert filter section before the slider container
-        const sliderContainer = document.querySelector('.photographer_section');
-        sliderContainer.parentNode.insertBefore(filterSection, sliderContainer);
-  
-        // Add event listener for filter change
-        filterSelect.addEventListener('change', handleFilterChange);
+    // Get the photographer ID from the URL
+    const url = window.location.href;
+    const id = url.split("#")[1];
+    console.log(id);
+
+    // Filter media based on photographer ID
+    const filteredMedia = data.media.filter(media => media.photographerId === parseInt(id));
+    console.log(filteredMedia);
+
+    // Function to render a slide
+    function showSlide(index) {
+      const media = filteredMedia[index];
+
+      const article = document.createElement('div');
+      article.classList.add('blockouf');
+      const figure = document.createElement('figure');
+      const title = document.createElement('p');
+      const likes = document.createElement('p');
+      const date = document.createElement('span');
+      const price = document.createElement('span');
+      const prblock = document.createElement('div');
+      likes.classList.add('lowgne');
+      title.classList.add('ligne');
+      prblock.classList.add('prblock')
+      title.textContent = media.title;
+      likes.textContent = media.likes + '❤';
+
+
+      if (media.image) {
+        const image = document.createElement('img');
+        image.src = `./assets/${media.photographerId}/${media.image}`;
+        image.alt = media.title;
+        figure.appendChild(image);
+      } else {
+        const blackSquare = document.createElement('div');
+        blackSquare.classList.add('black-square');
+
+        const playIcon = document.createElement('span');
+        playIcon.classList.add('play-icon');
+        playIcon.textContent = '▶';
+
+        blackSquare.appendChild(playIcon);
+        figure.appendChild(blackSquare);
       }
-  
-      // Render initial slides
+
+      if (media.video && media.videoPoster) {
+        const video = document.createElement('video');
+        video.src = `./assets/${media.photographerId}/${media.video}`;
+        video.poster = `./assets/${media.photographerId}/${media.videoPoster}`;
+        video.alt = media.title;
+        figure.appendChild(video);
+      }
+
+      article.appendChild(figure);
+      article.appendChild(prblock);
+      prblock.appendChild(title);
+
+
+      prblock.appendChild(likes);
+      prblock.appendChild(date);
+      prblock.appendChild(price);
+
+      figure.addEventListener('click', () => {
+        openImageModal(index);
+      });
+
+      const sliderContainer = document.querySelector('.photographer_section');
+      sliderContainer.appendChild(article);
+    }
+
+    // Render all the slides
+    function renderSlides() {
+      const sliderContainer = document.querySelector('.photographer_section');
+      sliderContainer.innerHTML = '';
+
       filteredMedia.forEach((media, index) => {
         showSlide(index);
       });
-  
-      // Add the filter section
-      addFilterSection();
-  
-    
-    } catch (error) {
-      console.error(error);
+    }
+
+    // Function to open the image modal
+    function openImageModal(index) {
+      const existingModal = document.querySelector('.image-modal');
+      if (existingModal) {
+        closeModal();
+      }
+
+      const modal = document.createElement('div');
+      modal.classList.add('image-modal');
+
+      const modalImage = document.createElement('img');
+      modalImage.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].image}`;
+      modalImage.alt = filteredMedia[index].title;
+
+      const modalVideo = document.createElement('video');
+      modalVideo.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].video}`;
+      modalVideo.poster = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].videoPoster}`;
+      modalVideo.alt = filteredMedia[index].title;
+      modalVideo.controls = true;
+      modalVideo.autoplay = true;
+
+      const prevButton = document.createElement('button');
+      prevButton.textContent = 'Précédent';
+      prevButton.classList.add('prev-button');
+      prevButton.addEventListener('click', () => {
+        const newIndex = (index - 1 + filteredMedia.length) % filteredMedia.length;
+        closeModal();
+        openImageModal(newIndex);
+      });
+
+      const nextButton = document.createElement('button');
+      nextButton.textContent = 'Suivant';
+      nextButton.classList.add('next-button');
+      nextButton.addEventListener('click', () => {
+        const newIndex = (index + 1) % filteredMedia.length;
+        closeModal();
+        openImageModal(newIndex);
+      });
+
+      const closeButton = document.createElement('button');
+      closeButton.textContent = 'Fermer';
+      closeButton.classList.add('close-button');
+      closeButton.addEventListener('click', () => {
+        closeModal();
+      });
+
+      modal.appendChild(closeButton);
+      modal.appendChild(prevButton);
+      modal.appendChild(nextButton);
+
+      if (filteredMedia[index].video) {
+        modal.appendChild(modalVideo);
+      } else {
+        modal.appendChild(modalImage);
+      }
+
+      document.body.appendChild(modal);
+    }
+
+    // Function to close the image modal
+    function closeModal() {
+      const modal = document.querySelector('.image-modal');
+      if (modal) {
+        modal.remove();
+      }
+    }
+
+
+    function addFilterSection() {
+  // Handle filter change event
+  function handleFilterChange() {
+    const selectElement = document.getElementById('filter-select');
+    const selectedValue = selectElement.value;
+
+    if (selectedValue === 'date') {
+      filterMediaByDate();
+    } else if (selectedValue === 'title') {
+      filterMediaByTitle();
+    } else if (selectedValue === 'popularity') {
+      filterMediaByPopularity();
     }
   }
-  
-  // Call the main function
-  getPhotographers();
-  
+
+  // Filter media by date
+  function filterMediaByDate() {
+    filteredMedia.sort((a, b) => new Date(a.date) - new Date(b.date));
+    renderSlides();
+  }
+
+  // Filter media by title
+  function filterMediaByTitle() {
+    filteredMedia.sort((a, b) => a.title.localeCompare(b.title));
+    renderSlides();
+  }
+
+  // Filter media by popularity
+  function filterMediaByPopularity() {
+    filteredMedia.sort((a, b) => b.likes - a.likes);
+    renderSlides();
+  }
+
+  // Create filter section elements
+  const filterSection = document.createElement('div');
+  filterSection.classList.add('filter-section');
+
+  const filterLabel = document.createElement('label');
+  filterLabel.setAttribute('for', 'filter-select');
+  filterLabel.textContent = 'Trier par :';
+
+  const filterSelect = document.createElement('select');
+  filterSelect.setAttribute('id', 'filter-select');
+  filterSelect.setAttribute('aria-haspopup', 'true'); // Add aria-haspopup attribute
+
+  const dateOption = document.createElement('option');
+  dateOption.setAttribute('value', 'date');
+  dateOption.textContent = 'Date';
+
+  const titleOption = document.createElement('option');
+  titleOption.setAttribute('value', 'title');
+  titleOption.textContent = 'Titre';
+
+  const popularityOption = document.createElement('option');
+  popularityOption.setAttribute('value', 'popularity');
+  popularityOption.textContent = 'Popularité';
+
+  filterSelect.appendChild(dateOption);
+  filterSelect.appendChild(titleOption);
+  filterSelect.appendChild(popularityOption);
+
+  filterSection.appendChild(filterLabel);
+  filterSection.appendChild(filterSelect);
+
+  // Insert filter section before the slider container
+  const sliderContainer = document.querySelector('.photographer_section');
+  sliderContainer.parentNode.insertBefore(filterSection, sliderContainer);
+
+  // Add event listener for filter change
+  filterSelect.addEventListener('change', handleFilterChange);
+}
+
+
+    // Render initial slides
+    filteredMedia.forEach((media, index) => {
+      showSlide(index);
+    });
+
+    // Add the filter section
+    addFilterSection();
+
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Call the main function
+getPhotographers();
+
+function displayPhotographersData() {
+  // Obtenir l'URL actuelle
+  const url = window.location.href;
+
+  // Trouver l'ID du photographe après le '#'
+  const idIndex = url.lastIndexOf('#');
+  const photographerId = url.substring(idIndex + 1);
+
+  // Effectuer un appel fetch pour récupérer les données des photographes
+  fetch('./data/photographers.json')
+    .then(response => response.json())
+    .then(data => {
+      // Trouver le photographe correspondant à l'ID
+      const photographer = data.photographers.find(p => p.id === parseInt(photographerId));
+
+      // Vérifier si le photographe existe
+      if (photographer) {
+        // Filtrer les médias pour obtenir ceux du photographe
+        const photographerMedia = data.media.filter(media => media.photographerId === parseInt(photographerId));
+
+        // Calculer la somme des likes
+        const totalLikes = photographerMedia.reduce((accumulator, currentValue) => accumulator + currentValue.likes, 0);
+
+        // Créer la div .tgm pour afficher les données
+        const tgmDiv = document.createElement('div');
+        tgmDiv.classList.add('tgm');
+
+        // Construire le contenu à afficher
+        const content = `
+          
+              <p>${totalLikes} ❤</p>  <p> ${photographer.price}€ /jour </p>
+             
+ 
+          `;
+
+        // Ajouter le contenu à la div .tgm
+        tgmDiv.innerHTML = content;
+
+        // Ajouter la div .tgm au DOM
+        document.body.appendChild(tgmDiv);
+      } else {
+        console.log('Photographer not found');
+      }
+    })
+    .catch(error => {
+      console.log('An error occurred:', error);
+    });
+}
+
+// Appeler la fonction pour afficher les données des photographes
+displayPhotographersData();

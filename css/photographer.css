@@ -27,7 +27,7 @@
 
 .modal {
     border-radius: 5px;
-    background-color: rgb(144 28 28);
+    background :rgb(219 136 118);
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -98,6 +98,7 @@
     font-size: 16px;
     cursor: pointer;
     color: white;
+
   }
   
   form textarea {
@@ -200,10 +201,11 @@
   .black-square {
     background-color: black;
     width: 300px;
-    height: 200px;
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 5px;
   }
   
   .play-icon {
@@ -243,23 +245,99 @@
     width: 86%;
     padding: 1em;
 }
-select#filter-select {
+#filter-select {
     background: #901c1c;
     border: 0px;
-    width: 95px;
+    width: 210px;
     height: 40px;
     padding: 11px;
     margin: 0px 10px;
     color: white;
     border-radius: 4px;
 }
-select#filter-select option {
-    background: #901c1c;
-    border: 0px;
-    width: 95px;
-    height: 140px;
-    padding: 11px;
-    margin: 0px 10px;
-    color: white;
-    border-radius: 4px;
+select>option{
+    font-size: 18px;
+
+    color: #ffffff;
+    background-color:#901c1c;
+    background-image: none;
+    font-size: 18px;
+    height: 50px;
+    padding: 15px;
+    border: 1px solid rgb(41, 18, 18);
 }
+ 
+.select:hover {
+    color: #fff;
+    background-color: #54a0ff;
+    transition-duration: 0.45s;
+    transition-direction: alternate;
+    transition-delay: 0.2s;
+}
+.info-wrapper h2 {
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 64px;
+line-height: 83px;
+    color: #D3573C;
+    margin: 0;
+}
+p.city {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 31px;
+    color: #901C1C;
+    margin: 0px;
+}
+.tgm {
+    background: #DB8876;
+    border-radius: 5px;
+    width: 30%;
+    float: right;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 5em;
+    position: sticky;
+    bottom: 0;
+    left: 0px;
+    right: 40px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 31px;
+    text-align: center;
+    max-height: 3em;
+}.tgm p{
+    margin: auto;
+    width: 80%;
+}
+
+.prblock {
+ width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+
+}
+p.ligne {
+    width: 100%;
+    margin: auto;
+    color: #901c1c;
+    font-weight: bold;
+    float: left;
+    
+}
+
+.lowgne{
+    width: 100%;
+    margin: auto;
+    text-align: right;
+    color: #901c1c;
+    font-weight: bold;
+    float: right;
+}
+

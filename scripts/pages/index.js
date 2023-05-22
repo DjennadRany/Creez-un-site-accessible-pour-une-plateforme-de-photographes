@@ -13,15 +13,24 @@ async function getPhotographers() {
         const link = document.createElement('a');
         const image = document.createElement('img');
         const heading = document.createElement('h2');
+        const textphoter = document.createElement('p');
+        const tarifphoter = document.createElement('p');
+        const citycont = document.createElement('p');
   
         link.href = `photographer.html#${encodeURIComponent(item.id)}`;
         image.src = `./assets/photographers/${item.portrait}`;
         image.alt = item.name;
         heading.textContent = item.name;
+        textphoter.textContent = item.tagline
+        citycont.textContent = item.city + ', ' + item.country 
+        tarifphoter.textContent = item.price +'€/jours'
   
         link.appendChild(image);
         article.appendChild(link);
         article.appendChild(heading);
+        article.appendChild(citycont);
+        article.appendChild(textphoter);
+        article.appendChild(tarifphoter);
         photographerSection.appendChild(article);
       });
     } catch (error) {
