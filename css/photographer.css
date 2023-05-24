@@ -240,11 +240,7 @@
     margin: auto;
 }
 
-.filter-section {
-    margin: auto;
-    width: 86%;
-    padding: 1em;
-}
+
 #filter-select {
     background: #901c1c;
     border: 0px;
@@ -255,25 +251,56 @@
     color: white;
     border-radius: 4px;
 }
-select>option{
-    font-size: 18px;
+.filter-section {
+  position: relative;
+  margin: auto;
+  width: 86%;
+  padding: 1em;
+}
 
-    color: #ffffff;
-    background-color:#901c1c;
-    background-image: none;
-    font-size: 18px;
-    height: 50px;
-    padding: 15px;
-    border: 1px solid rgb(41, 18, 18);
+.filter-section label {
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
- 
-.select:hover {
-    color: #fff;
-    background-color: #54a0ff;
-    transition-duration: 0.45s;
-    transition-direction: alternate;
-    transition-delay: 0.2s;
+
+.filter-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
+
+.filter-section li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.filter-section a {
+  display: block;
+  padding: 5px 10px;
+  color: #333;
+  text-decoration: none;
+}
+
+.filter-section a:hover {
+  background-color: #f0f0f0;
+}
+
+.filter-section .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  padding: 5px 0;
+  border: 1px solid #ccc;
+  z-index: 1;
+}
+
+.filter-section li:hover .dropdown-menu {
+  display: block;
+}
+
 .info-wrapper h2 {
 
 font-family: 'DM Sans';

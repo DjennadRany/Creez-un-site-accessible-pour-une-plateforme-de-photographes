@@ -247,8 +247,7 @@ async function getPhotographers() {
       }
     }
 
-
-    function addFilterSection() {
+function addFilterSection() {
   // Handle filter change event
   function handleFilterChange() {
     const selectElement = document.getElementById('filter-select');
@@ -282,7 +281,7 @@ async function getPhotographers() {
   }
 
   // Create filter section elements
-  const filterSection = document.createElement('div');
+  const filterSection = document.createElement('nav');
   filterSection.classList.add('filter-section');
 
   const filterLabel = document.createElement('label');
