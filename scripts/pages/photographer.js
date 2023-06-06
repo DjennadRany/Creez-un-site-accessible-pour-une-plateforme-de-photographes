@@ -198,9 +198,17 @@ fetch('./data/photographers.json')
         modalVideo.controls = true;
         modalVideo.autoplay = true;
 
+        const modalTitle = document.createElement('div');
+        const modalTitlesav = document.createElement('div');
+        modalTitle.textContent = filteredMedia[index].title;
+        modalTitle.classList.add('txt-img-modal');
+
         const prevButton = document.createElement('button');
-        prevButton.textContent = 'Précédent';
+        
         prevButton.classList.add('prev-button');
+        prevButton.classList.add('fa-sharp');
+        prevButton.classList.add('fa-solid');
+        prevButton.classList.add('fa-chevron-left');
         prevButton.addEventListener('click', () => {
           const newIndex = (index - 1 + filteredMedia.length) % filteredMedia.length;
           closeModal();
@@ -208,8 +216,11 @@ fetch('./data/photographers.json')
         });
 
         const nextButton = document.createElement('button');
-        nextButton.textContent = 'Suivant';
+        
         nextButton.classList.add('next-button');
+        nextButton.classList.add('fa-solid');
+      
+        nextButton.classList.add('fa-chevron-right');
         nextButton.addEventListener('click', () => {
           const newIndex = (index + 1) % filteredMedia.length;
           closeModal();
@@ -217,20 +228,33 @@ fetch('./data/photographers.json')
         });
 
         const closeButton = document.createElement('button');
-        closeButton.textContent = 'Fermer';
+        
         closeButton.classList.add('close-button');
+        closeButton.classList.add('fa-solid');
+        closeButton.classList.add('fa-xmark');
         closeButton.addEventListener('click', () => {
           closeModal();
         });
 
-        modal.appendChild(closeButton);
-        modal.appendChild(prevButton);
-        modal.appendChild(nextButton);
+        
 
         if (filteredMedia[index].video) {
+          
+          modal.appendChild(prevButton);
           modal.appendChild(modalVideo);
+          modal.appendChild(closeButton);
+          modal.appendChild(nextButton);
+          modal.appendChild(modalTitlesav);
+          modal.appendChild(modalTitle);
         } else {
-          modal.appendChild(modalImage);
+          
+        
+        modal.appendChild(prevButton);
+        modal.appendChild(modalImage);
+        modal.appendChild(closeButton);
+        modal.appendChild(nextButton);
+        modal.appendChild(modalTitlesav);
+        modal.appendChild(modalTitle);
         }
 
         document.body.appendChild(modal);
@@ -325,7 +349,8 @@ fetch('./data/photographers.json')
         sliderContainer.parentNode.insertBefore(filterSection, sliderContainer);
       
         // Toggle dropdown visibility and update selected value
-        dropdownContainer.addEventListener('click', function() {
+        dropdownContainer.addEventListener('mouseenter', function() {
+          dropdownIcon.classList.toggle('dropdown-anim');
           dropdownOptions.classList.toggle('show');
         });
       
@@ -338,7 +363,7 @@ fetch('./data/photographers.json')
             dropdownLabel.textContent = selectedText;
             handleFilterChange();
             dropdownOptions.classList.remove('show');
-          }
+          } dropdownIcon.classList.remove('dropdown-anim');
         });
       }
       
