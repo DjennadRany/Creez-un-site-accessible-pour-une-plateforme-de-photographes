@@ -19,6 +19,7 @@ async function getPhotographers() {
   
         link.href = `photographer.html#${encodeURIComponent(item.id)}`;
         image.src = `./assets/photographers/${item.portrait}`;
+        image.setAttribute('aria-label', `Photo de ${item.name}`);
         image.alt = item.name;
         heading.textContent = item.name;
         textphoter.textContent = item.tagline
@@ -32,6 +33,7 @@ async function getPhotographers() {
         article.appendChild(textphoter);
         article.appendChild(tarifphoter);
         photographerSection.appendChild(article);
+       
       });
     } catch (error) {
       console.log('Fetch Error :-S', error);

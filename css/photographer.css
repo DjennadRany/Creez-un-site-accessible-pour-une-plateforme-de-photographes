@@ -134,7 +134,14 @@
 .image-modal.open {
     display: flex;
 }
-
+img.preced {
+  width: 1em;
+  height: 1em;
+}
+img.suivan {
+  width: 1em;
+  height: 1em;
+}
 .image-modal .prev-button {
   
     color: #901C1C;
@@ -331,15 +338,19 @@ label {
 
 .dropdown-label {
   display: flex;
-  align-items: center;
-  justify-content: center;
   padding-top: 12px;
   color: #fff;
   cursor: pointer;
+  padding: 1em;
   width: 100%;
   position: relative;
   box-sizing: border-box;
   transition: background-color 0.3s;
+  align-items: center;
+  flex-wrap: nowrap;
+  align-content: space-between;
+  justify-content: flex-start;
+
 }
 
 .dropdown-icon {
@@ -369,16 +380,17 @@ label {
 }
 .dropdown-options {
   position: absolute;
-  top: 100%;
+  top: 90%;
   left: 0;
   z-index: 1;
   display: none;
   padding: 0;
   margin: 0;
   list-style: none;
-
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   width: 100%;
+  background: #901c1c;
+  border-radius: 0px 0px 4px 4px;
 }
 
 .dropdown-options.show {
@@ -386,18 +398,19 @@ label {
 }
 
 .dropdown-options li {
-  padding: 8px 12px;
-  cursor: pointer;
-  background: #901c1c;
-  border-top: 1px solid white;
-  width: 84%;
-  color: white;
-  text-align: center;
+  padding: 14px 0px;
+    cursor: pointer;
+    background: #901c1c;
+    border-top: 1px solid white;
+    width: 75%;
+    margin: auto;
+    color: white;
+}
+ 
+.selected {
+  display: none;
 }
 
-.dropdown-options li:hover {
-  background-color: #949494;
-}
 .dropdown-options li:last-child {
   border-radius: 0px 0px 4px 4px;
   -webkit-border-radius: 0px 0px 4px 4px;
