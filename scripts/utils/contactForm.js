@@ -58,10 +58,10 @@ function validateForm() {
   const message = document.getElementById("message_input").value;
 
   // Expression régulière pour valider le nom et prénom (lettres uniquement)
-  const nameRegex = /^[A-Za-z]+$/;
+  const nameRegex = /^(?=.*[A-Za-zÀ-ÖØ-öø-ÿ])(?=\S+$).{2,}$/;
 
   // Expression régulière pour valider l'adresse email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^(?!\.)[a-zA-Z0-9._%+-]+@(?!-)[a-zA-Z0-9.-]+\.([a-zA-Z]{2,}|(?!-)[a-zA-Z0-9-]{2,})$/;
 
   // Valider le champ du prénom
   if (!nameRegex.test(firstName)) {
