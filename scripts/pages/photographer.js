@@ -10,7 +10,7 @@ function incrementPhotographerInfo(photographer) {
   const infoWrapper = document.createElement('div');
   infoWrapper.classList.add('info-wrapper');
 
-
+  document.title = "Fisheye - Photographe " + photographer.name;
 
   const nameElement = document.createElement('h2');
   nameElement.textContent = photographer.name;
