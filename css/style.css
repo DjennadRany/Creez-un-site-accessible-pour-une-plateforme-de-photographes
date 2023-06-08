@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import url("photographer.css");
 
 body {
@@ -95,3 +96,102 @@ article p {
     object-fit: cover;
     border-radius: 5px;
 }
+=======
+@import url("photographer.css");
+
+body {
+    font-family: "DM Sans", sans-serif;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+}
+
+h1 {
+    color: #901C1C;
+    margin-right: 100px;
+}
+
+.logo {
+    height: 50px;
+    margin-left: 100px;
+}
+
+.photographer_section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    
+}
+
+.photographer_section article {
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3em;
+}
+
+.photographer_section article h2 {
+    color: #D3573C;
+    font-size: 36px;
+    text-align: center;
+    margin:auto;
+}
+.photographer_section article :nth-child(3n) {
+    color: #901C1C;
+    font-size: 13px;
+  line-height: 17px;
+  }
+  .photographer_section article :nth-child(4n) {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 13px;
+  }
+  article :nth-child(5n) {
+    font-size: 9px;
+  line-height: 12px;
+  color: #757575;
+  }
+
+.photographer_section article img {
+    height: 200px;
+    width: 200px;
+    background-position: center;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 2px 4px 4px #04040463;
+}
+article p {
+    margin: auto;
+}
+.photographer_section .blockouf {
+    margin: 9em auto;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.photographer_section .blockouf h2 {
+    color: #D3573C;
+    font-size: 26px;
+    text-align: center;
+}
+
+.photographer_section .blockouf img {
+    height: 300px;
+    width: 300px;
+    background-position: center;
+    object-fit: cover;
+    border-radius: 5px;
+}
+>>>>>>> a383b40 (Message de commit)
