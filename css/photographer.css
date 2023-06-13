@@ -298,7 +298,7 @@ p.city {
  width: 100%;
     display: grid;
     grid-template-columns: 1fr 0.5fr;
-
+    margin-top: 1em;
 }
 p.ligne {
     width: 100%;

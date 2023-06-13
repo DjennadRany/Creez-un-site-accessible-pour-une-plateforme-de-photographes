@@ -92,7 +92,7 @@ async function getPhotographers() {
             const article = document.createElement('div');
             article.classList.add('blockouf');
             article.setAttribute('tabindex', '0');
-            const figure = document.createElement('figure');
+            const figure = document.createElement('article');
             const title = document.createElement('p');
             const likes = document.createElement('p');
             const date = document.createElement('span');
@@ -149,7 +149,7 @@ async function getPhotographers() {
                 document.getElementById('totalLikes').textContent = totalLikes + ' ❤'; // Met à jour le total des likes
             });
 
-            const sliderContainer = document.querySelector('.photographer_section');
+            const sliderContainer = document.querySelector('.photo_section');
             sliderContainer.appendChild(article);
         }
 
@@ -160,7 +160,7 @@ async function getPhotographers() {
 
         // Render all the slides
         function renderSlides() {
-            const sliderContainer = document.querySelector('.photographer_section');
+            const sliderContainer = document.querySelector('.photo_section');
             sliderContainer.innerHTML = '';
 
             filteredMedia.forEach((media, index) => {
@@ -350,7 +350,7 @@ async function getPhotographers() {
             filterSection.appendChild(filterLabel);
             filterSection.appendChild(dropdownContainer);
 
-            const sliderContainer = document.querySelector('.photographer_section');
+            const sliderContainer = document.querySelector('.photo_section');
             sliderContainer.parentNode.insertBefore(filterSection, sliderContainer);
 
             // Toggle dropdown visibility and update selected value
