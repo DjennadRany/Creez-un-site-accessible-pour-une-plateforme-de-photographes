@@ -83,70 +83,55 @@ function incrementPhotographerInfo(photographer) {
       console.log('Une erreur s\'est produite lors de la récupération du fichier JSON :', error);
     });
   
-    function displayPhotographersData() {
-        // Obtenir l'URL actuelle
-        const url = window.location.href;
-      
-        // Trouver l'ID du photographe après le '#'
-        const idIndex = url.lastIndexOf('#');
-        const photographerId = url.substring(idIndex + 1);
-      
-        // Effectuer un appel fetch pour récupérer les données des photographes
-        fetch('./data/photographers.json')
-          .then(response => response.json())
-          .then(data => {
-            // Trouver le photographe correspondant à l'ID
-            const photographer = data.photographers.find(p => p.id === parseInt(photographerId));
-      
-            // Vérifier si le photographe existe
-            if (photographer) {
-              // Filtrer les médias pour obtenir ceux du photographe
-              const photographerMedia = data.media.filter(media => media.photographerId === parseInt(photographerId));
-      
-              // Calculer la somme des likes
-              let totalLikes = photographerMedia.reduce((accumulator, currentValue) => accumulator + currentValue.likes, 0);
-      
-              // Créer la div .tgm pour afficher les données
-              const tgmDiv = document.createElement('div');
-              tgmDiv.classList.add('tgm');
-      
-              // Créer le premier paragraphe (p) pour afficher le nombre de likes
-              const totalLikesElement = document.createElement('p');
-              totalLikesElement.id = 'totalLikes';
-              totalLikesElement.textContent = `${totalLikes} ❤`;
-      
-              // Créer le deuxième paragraphe (p) pour afficher le prix du photographe
-              const priceElement = document.createElement('p');
-              priceElement.textContent = `${photographer.price}€ /jour`;
-      
-              // Ajouter les éléments de texte à la div .tgm
-              tgmDiv.appendChild(totalLikesElement);
-              tgmDiv.appendChild(priceElement);
-      
-              // Ajouter la div .tgm au DOM
-              document.body.appendChild(tgmDiv);
-      
-              // Ajouter un gestionnaire d'événements click à tous les éléments ayant la classe "lowgne"
-              const lowgneElements = document.querySelectorAll('.lowgne');
-              lowgneElements.forEach(element => {
-                element.addEventListener('click', () => {
-                  // Augmenter le nombre de likes
-                  totalLikes++;
-      
-                  // Mettre à jour le contenu du premier paragraphe (p) de la div tgm
-                  totalLikesElement.textContent = `${totalLikes} ❤`;
-                });
-              });
-            } else {
-              console.log('Photographer not found');
-            }
-          })
-          .catch(error => {
-            console.log('An error occurred:', error);
-          });
-      }
-      
-      // Appeler la fonction pour afficher les données des photographes
-      displayPhotographersData();
-      
-      
+  
+  function displayPhotographersData() {
+    // Obtenir l'URL actuelle
+    const url = window.location.href;
+  
+    // Trouver l'ID du photographe après le '#'
+    const idIndex = url.lastIndexOf('#');
+    const photographerId = url.substring(idIndex + 1);
+  
+    // Effectuer un appel fetch pour récupérer les données des photographes
+    fetch('./data/photographers.json')
+      .then(response => response.json())
+      .then(data => {
+        // Trouver le photographe correspondant à l'ID
+        const photographer = data.photographers.find(p => p.id === parseInt(photographerId));
+  
+        // Vérifier si le photographe existe
+        if (photographer) {
+          // Filtrer les médias pour obtenir ceux du photographe
+          const photographerMedia = data.media.filter(media => media.photographerId === parseInt(photographerId));
+  
+          // Calculer la somme des likes
+          const totalLikes = photographerMedia.reduce((accumulator, currentValue) => accumulator + currentValue.likes, 0);
+  
+          // Créer la div .tgm pour afficher les données
+          const tgmDiv = document.createElement('div');
+          tgmDiv.classList.add('tgm');
+  
+          // Construire le contenu à afficher
+          const content = `
+            
+                <p>${totalLikes} ❤</p>  <p> ${photographer.price}€ /jour </p>
+               
+   
+            `;
+  
+          // Ajouter le contenu à la div .tgm
+          tgmDiv.innerHTML = content;
+  
+          // Ajouter la div .tgm au DOM
+          document.body.appendChild(tgmDiv);
+        } else {
+          console.log('Photographer not found');
+        }
+      })
+      .catch(error => {
+        console.log('An error occurred:', error);
+      });
+  }
+  
+  // Appeler la fonction pour afficher les données des photographes
+  displayPhotographersData();

@@ -82,12 +82,16 @@ async function getPhotographers() {
         console.log(filteredMedia);
 
         // Variable pour stocker le nombre total de likes
-        let totalLikes = parseInt(document.getElementById('totalLikes').textContent);
+        document.addEventListener('DOMContentLoaded', function () {
+            let totalLikes = parseInt(document.getElementById('totalLikes').textContent);
+        });
+
         function showSlide(index) {
             const media = filteredMedia[index];
-          
+
             const article = document.createElement('div');
             article.classList.add('blockouf');
+            article.setAttribute('tabindex', '0');
             const figure = document.createElement('figure');
             const title = document.createElement('p');
             const likes = document.createElement('p');
@@ -99,57 +103,57 @@ async function getPhotographers() {
             prblock.classList.add('prblock');
             title.textContent = media.title;
             likes.textContent = media.likes + '❤';
-          
+
             if (media.image !== undefined) {
-              const image = document.createElement('img');
-              image.src = `./assets/${media.photographerId}/${media.image}`;
-              image.alt = media.title;
-              image.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
-              figure.appendChild(image);
+                const image = document.createElement('img');
+                image.src = `./assets/${media.photographerId}/${media.image}`;
+                image.alt = media.title;
+                image.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
+                figure.appendChild(image);
             } else if (media.video && media.videoPoster) {
-              const video = document.createElement('video');
-              video.src = `./assets/${media.photographerId}/${media.video}`;
-              video.poster = `./assets/${media.photographerId}/${media.videoPoster}`;
-              video.alt = media.title;
-              figure.appendChild(video);
+                const video = document.createElement('video');
+                video.src = `./assets/${media.photographerId}/${media.video}`;
+                video.poster = `./assets/${media.photographerId}/${media.videoPoster}`;
+                video.alt = media.title;
+                figure.appendChild(video);
             } else {
-              const blackSquare = document.createElement('div');
-              blackSquare.classList.add('black-square');
-          
-              const playIcon = document.createElement('span');
-              playIcon.classList.add('play-icon');
-              playIcon.textContent = '▶';
-          
-              blackSquare.appendChild(playIcon);
-              figure.appendChild(blackSquare);
+                const blackSquare = document.createElement('div');
+                blackSquare.classList.add('black-square');
+
+                const playIcon = document.createElement('span');
+                playIcon.classList.add('play-icon');
+                playIcon.textContent = '▶';
+
+                blackSquare.appendChild(playIcon);
+                figure.appendChild(blackSquare);
             }
-          
+
             article.appendChild(figure);
             article.appendChild(prblock);
             prblock.appendChild(title);
             prblock.appendChild(likes);
             prblock.appendChild(date);
             prblock.appendChild(price);
-          
+
             figure.addEventListener('click', () => {
-              openImageModal(index);
+                openImageModal(index);
             });
-          
+
             likes.addEventListener('click', (event) => {
-              event.stopPropagation(); // Empêche la propagation de l'événement de clic sur l'élément parent
-          
-              media.likes++; // Incrémente le nombre de likes du média
-              totalLikes++; // Incrémente le nombre total de likes
-          
-              likes.textContent = media.likes + '❤'; // Met à jour le texte des likes
-              document.getElementById('totalLikes').textContent = totalLikes + ' ❤'; // Met à jour le total des likes
+                event.stopPropagation(); // Empêche la propagation de l'événement de clic sur l'élément parent
+
+                media.likes++; // Incrémente le nombre de likes du média
+                totalLikes++; // Incrémente le nombre total de likes
+
+                likes.textContent = media.likes + '❤'; // Met à jour le texte des likes
+                document.getElementById('totalLikes').textContent = totalLikes + ' ❤'; // Met à jour le total des likes
             });
-          
+
             const sliderContainer = document.querySelector('.photographer_section');
             sliderContainer.appendChild(article);
-          }
-          
-          
+        }
+
+
 
 
 
@@ -302,7 +306,7 @@ async function getPhotographers() {
             filterLabel.setAttribute('for', 'filter-select');
             filterLabel.textContent = 'Trier par :';
 
-            const dropdownContainer = document.createElement('div');
+            const dropdownContainer = document.createElement('nav');
             dropdownContainer.classList.add('dropdown');
 
             const dropdownLabel = document.createElement('span');

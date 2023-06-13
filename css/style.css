@@ -25,7 +25,10 @@ h1 {
 
 .photographer_section {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 30% 30% 30%;
+    margin: auto;
+    width: 80%;
+    justify-content: space-around;
 
     
 }
