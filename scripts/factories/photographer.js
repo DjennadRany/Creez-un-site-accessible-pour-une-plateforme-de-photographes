@@ -114,7 +114,7 @@ function incrementPhotographerInfo(photographer) {
           // Construire le contenu à afficher
           const content = `
             
-                <p>${totalLikes} ❤</p>  <p> ${photographer.price}€ /jour </p>
+                <p class="totalLikes">${totalLikes} ❤</p>  <p> ${photographer.price}€ /jour </p>
                
    
             `;

@@ -80,79 +80,77 @@ async function getPhotographers() {
         // Filter media based on photographer ID
         const filteredMedia = data.media.filter(media => media.photographerId === parseInt(id));
         console.log(filteredMedia);
+// Function to render a slide
+function showSlide(index) {
+    const media = filteredMedia[index];
 
-        // Variable pour stocker le nombre total de likes
-        document.addEventListener('DOMContentLoaded', function () {
-            let totalLikes = parseInt(document.getElementById('totalLikes').textContent);
-        });
+    const article = document.createElement('div');
+    article.classList.add('blockouf');
+    article.setAttribute('tabindex', '0');
+    const figure = document.createElement('article');
+    const title = document.createElement('p');
+    const likes = document.createElement('p');
+    const date = document.createElement('span');
+    const price = document.createElement('span');
+    const prblock = document.createElement('div');
+    likes.classList.add('lowgne');
+    title.classList.add('ligne');
+    prblock.classList.add('prblock');
+    title.textContent = media.title;
+    likes.textContent = media.likes + '❤';
 
-        function showSlide(index) {
-            const media = filteredMedia[index];
+    if (media.image !== undefined) {
+        const image = document.createElement('img');
+        image.src = `./assets/${media.photographerId}/${media.image}`;
+        image.alt = media.title;
+        image.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
+        figure.appendChild(image);
+    } else if (media.video && media.videoPoster) {
+        const video = document.createElement('video');
+        video.src = `./assets/${media.photographerId}/${media.video}`;
+        video.poster = `./assets/${media.photographerId}/${media.videoPoster}`;
+        video.alt = media.title;
+        figure.appendChild(video);
+    } else {
+        const blackSquare = document.createElement('div');
+        blackSquare.classList.add('black-square');
 
-            const article = document.createElement('div');
-            article.classList.add('blockouf');
-            article.setAttribute('tabindex', '0');
-            const figure = document.createElement('article');
-            const title = document.createElement('p');
-            const likes = document.createElement('p');
-            const date = document.createElement('span');
-            const price = document.createElement('span');
-            const prblock = document.createElement('div');
-            likes.classList.add('lowgne');
-            title.classList.add('ligne');
-            prblock.classList.add('prblock');
-            title.textContent = media.title;
-            likes.textContent = media.likes + '❤';
+        const playIcon = document.createElement('span');
+        playIcon.classList.add('play-icon');
+        playIcon.textContent = '▶';
 
-            if (media.image !== undefined) {
-                const image = document.createElement('img');
-                image.src = `./assets/${media.photographerId}/${media.image}`;
-                image.alt = media.title;
-                image.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
-                figure.appendChild(image);
-            } else if (media.video && media.videoPoster) {
-                const video = document.createElement('video');
-                video.src = `./assets/${media.photographerId}/${media.video}`;
-                video.poster = `./assets/${media.photographerId}/${media.videoPoster}`;
-                video.alt = media.title;
-                figure.appendChild(video);
-            } else {
-                const blackSquare = document.createElement('div');
-                blackSquare.classList.add('black-square');
+        blackSquare.appendChild(playIcon);
+        figure.appendChild(blackSquare);
+    }
 
-                const playIcon = document.createElement('span');
-                playIcon.classList.add('play-icon');
-                playIcon.textContent = '▶';
+    article.appendChild(figure);
+    article.appendChild(prblock);
+    prblock.appendChild(title);
+    prblock.appendChild(likes);
+    prblock.appendChild(date);
+    prblock.appendChild(price);
 
-                blackSquare.appendChild(playIcon);
-                figure.appendChild(blackSquare);
-            }
+    figure.addEventListener('click', () => {
+        openImageModal(index);
+    });
 
-            article.appendChild(figure);
-            article.appendChild(prblock);
-            prblock.appendChild(title);
-            prblock.appendChild(likes);
-            prblock.appendChild(date);
-            prblock.appendChild(price);
+    likes.addEventListener('click', (event) => {
+        event.stopPropagation(); // Empêche la propagation de l'événement de clic sur l'élément parent
 
-            figure.addEventListener('click', () => {
-                openImageModal(index);
-            });
+        media.likes++; // Incrémente le nombre de likes du média
+        likes.textContent = media.likes + '❤'; // Met à jour le texte des likes
 
-            likes.addEventListener('click', (event) => {
-                event.stopPropagation(); // Empêche la propagation de l'événement de clic sur l'élément parent
-
-                media.likes++; // Incrémente le nombre de likes du média
-                totalLikes++; // Incrémente le nombre total de likes
-
-                likes.textContent = media.likes + '❤'; // Met à jour le texte des likes
-                document.getElementById('totalLikes').textContent = totalLikes + ' ❤'; // Met à jour le total des likes
-            });
-
-            const sliderContainer = document.querySelector('.photo_section');
-            sliderContainer.appendChild(article);
+        const totalLikesElement = document.querySelector('.totalLikes');
+        if (totalLikesElement) {
+            let totalLikes = parseInt(totalLikesElement.textContent); // Obtient la valeur actuelle des likes
+            totalLikes++; // Incrémente le total des likes
+            totalLikesElement.textContent = totalLikes + ' ❤'; // Met à jour le total des likes
         }
+    });
 
+    const sliderContainer = document.querySelector('.photo_section');
+    sliderContainer.appendChild(article);
+}
 
 
 
@@ -323,20 +321,23 @@ async function getPhotographers() {
 
             const dropdownOptions = document.createElement('ul');
             dropdownOptions.classList.add('dropdown-options');
+            dropdownOptions.setAttribute('tabindex', '0');
 
             const dropdownOptionDate = document.createElement('li');
             dropdownOptionDate.textContent = 'Date';
             dropdownOptionDate.setAttribute('data-value', 'date');
             dropdownOptionDate.classList.add('selected');
+            dropdownOptionDate.setAttribute('tabindex', '0');
 
             const dropdownOptionTitle = document.createElement('li');
             dropdownOptionTitle.textContent = 'Titre';
             dropdownOptionTitle.setAttribute('data-value', 'title');
+            dropdownOptionTitle.setAttribute('tabindex', '0');
 
             const dropdownOptionPopularity = document.createElement('li');
             dropdownOptionPopularity.textContent = 'Popularité';
             dropdownOptionPopularity.setAttribute('data-value', 'popularity');
-
+            dropdownOptionPopularity.setAttribute('tabindex', '0');
 
 
             dropdownOptions.appendChild(dropdownOptionDate);
