@@ -1,160 +1,75 @@
-// Déclaration de la classe Photographer
-class Photographer {
-    constructor(id, name, city, country, tags, tagline, price, portrait) {
-        this.id = id;
-        this.name = name;
-        this.city = city;
-        this.country = country;
-        this.tags = tags;
-        this.tagline = tagline;
-        this.price = price;
-        this.portrait = portrait;
-    }
-}
+import Article from '../module/articlemodule.js'
 
-// Déclaration de la classe Media
-class Media {
-    constructor(id, photographerId, title, image, video, tags, likes, date, price) {
-        this.id = id;
-        this.photographerId = photographerId;
-        this.title = title;
-        this.image = image;
-        this.video = video;
-        this.tags = tags;
-        this.likes = likes;
-        this.date = date;
-        this.price = price;
-    }
-}
 
-// Déclaration de la classe PhotographerFactory
-class PhotographerFactory {
-    static createPhotographer(data) {
-        const {
-            id,
-            name,
-            city,
-            country,
-            tags,
-            tagline,
-            price,
-            portrait
-        } = data;
-        return new Photographer(id, name, city, country, tags, tagline, price, portrait);
-    }
-}
+const response = await fetch('./data/photographers.json');
+const data = await response.json();
+console.log(data.photographers);
 
-// Déclaration de la classe MediaFactory
-class MediaFactory {
-    static createMedia(data) {
-        const {
-            id,
-            photographerId,
-            title,
-            image,
-            video,
-            tags,
-            likes,
-            date,
-            price
-        } = data;
-        return new Media(id, photographerId, title, image, video, tags, likes, date, price);
-    }
-}
+// Get the photographer ID from the URL
+const url = window.location.href;
+const id = url.split("#")[1];
+console.log(id);
+
+// Filter media based on photographer ID
+const filteredMedia = data.media.filter(media => media.photographerId === parseInt(id));
+console.log(filteredMedia);
+// Function to render a slide
+
+
+
+
 
 // Fonction principale pour récupérer les photographes
 async function getPhotographers() {
     try {
-        const response = await fetch('./data/photographers.json');
-        if (!response.ok) {
-            throw new Error('Looks like there was a problem. Status Code: ' + response.status);
+
+        function showSlide(index) {
+            const media = filteredMedia[index];
+            const articleInstance = new Article(media);
+
+            if (media.image !== undefined) {
+                const image = document.createElement('img');
+                image.src = `./assets/${media.photographerId}/${media.image}`;
+                image.alt = media.title;
+                image.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
+                articleInstance.figure.appendChild(image);
+            } else if (media.video && media.videoPoster) {
+                const video = document.createElement('video');
+                video.src = `./assets/${media.photographerId}/${media.video}`;
+                video.poster = `./assets/${media.photographerId}/${media.videoPoster}`;
+                video.alt = media.title;
+                articleInstance.figure.appendChild(video);
+            } else {
+                const blackSquare = document.createElement('div');
+                blackSquare.classList.add('black-square');
+
+                const playIcon = document.createElement('span');
+                playIcon.classList.add('play-icon');
+                playIcon.textContent = '▶';
+                blackSquare.appendChild(playIcon);
+                articleInstance.figure.appendChild(blackSquare);
+            }
+
+            articleInstance.addToSliderContainer(document.querySelector('.photo_section'));
+
+            articleInstance.figure.addEventListener('click', () => {
+                openImageModal(index);
+            });
+
+            articleInstance.likes.addEventListener('click', (event) => {
+                event.stopPropagation(); // Empêche la propagation de l'événement de clic sur l'élément parent
+
+                media.likes++; // Incrémente le nombre de likes du média
+                articleInstance.likes.textContent = media.likes + '❤'; // Met à jour le texte des likes
+
+                const totalLikesElement = document.querySelector('.totalLikes');
+                if (totalLikesElement) {
+                    let totalLikes = parseInt(totalLikesElement.textContent); // Obtient la valeur actuelle des likes
+                    totalLikes++; // Incrémente le total des likes
+                    totalLikesElement.textContent = totalLikes + ' ❤'; // Met à jour le total des likes
+                }
+            });
         }
-        const data = await response.json();
-        console.log(data.photographers);
-
-        // Get the photographer ID from the URL
-        const url = window.location.href;
-        const id = url.split("#")[1];
-        console.log(id);
-
-        // Filter media based on photographer ID
-        const filteredMedia = data.media.filter(media => media.photographerId === parseInt(id));
-        console.log(filteredMedia);
-// Function to render a slide
-function showSlide(index) {
-    const media = filteredMedia[index];
-
-    const article = document.createElement('div');
-    article.classList.add('blockouf');
-    article.setAttribute('tabindex', '0');
-    const figure = document.createElement('article');
-    const title = document.createElement('p');
-    const likes = document.createElement('p');
-    const date = document.createElement('span');
-    const price = document.createElement('span');
-    const prblock = document.createElement('div');
-    likes.classList.add('lowgne');
-    title.classList.add('ligne');
-    prblock.classList.add('prblock');
-    title.textContent = media.title;
-    likes.textContent = media.likes + '❤';
-
-    if (media.image !== undefined) {
-        const image = document.createElement('img');
-        image.src = `./assets/${media.photographerId}/${media.image}`;
-        image.alt = media.title;
-        image.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
-        figure.appendChild(image);
-    } else if (media.video && media.videoPoster) {
-        const video = document.createElement('video');
-        video.src = `./assets/${media.photographerId}/${media.video}`;
-        video.poster = `./assets/${media.photographerId}/${media.videoPoster}`;
-        video.alt = media.title;
-        figure.appendChild(video);
-    } else {
-        const blackSquare = document.createElement('div');
-        blackSquare.classList.add('black-square');
-
-        const playIcon = document.createElement('span');
-        playIcon.classList.add('play-icon');
-        playIcon.textContent = '▶';
-
-        blackSquare.appendChild(playIcon);
-        figure.appendChild(blackSquare);
-    }
-
-    article.appendChild(figure);
-    article.appendChild(prblock);
-    prblock.appendChild(title);
-    prblock.appendChild(likes);
-    prblock.appendChild(date);
-    prblock.appendChild(price);
-
-    figure.addEventListener('click', () => {
-        openImageModal(index);
-    });
-
-    likes.addEventListener('click', (event) => {
-        event.stopPropagation(); // Empêche la propagation de l'événement de clic sur l'élément parent
-
-        media.likes++; // Incrémente le nombre de likes du média
-        likes.textContent = media.likes + '❤'; // Met à jour le texte des likes
-
-        const totalLikesElement = document.querySelector('.totalLikes');
-        if (totalLikesElement) {
-            let totalLikes = parseInt(totalLikesElement.textContent); // Obtient la valeur actuelle des likes
-            totalLikes++; // Incrémente le total des likes
-            totalLikesElement.textContent = totalLikes + ' ❤'; // Met à jour le total des likes
-        }
-    });
-
-    const sliderContainer = document.querySelector('.photo_section');
-    sliderContainer.appendChild(article);
-}
-
-
-
-
 
         // Render all the slides
         function renderSlides() {
@@ -177,18 +92,20 @@ function showSlide(index) {
             modal.classList.add('image-modal');
 
             const modalImage = document.createElement('img');
-            modalImage.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].image}`;
-            modalImage.alt = filteredMedia[index].title;
-            modalImage.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
-
+            if (filteredMedia[index].image) {
+                modalImage.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].image}`;
+                modalImage.alt = filteredMedia[index].title;
+                modalImage.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
+            }
             const modalVideo = document.createElement('video');
-            modalVideo.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].video}`;
-            modalVideo.poster = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].videoPoster}`;
-            modalVideo.alt = filteredMedia[index].title;
-            modalVideo.setAttribute('aria-label', `Video : ${filteredMedia[index].title}`);
-            modalVideo.controls = true;
-            modalVideo.autoplay = true;
+            if (filteredMedia[index].video) {
+                modalVideo.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].video}`;
 
+                modalVideo.alt = filteredMedia[index].title;
+                modalVideo.setAttribute('aria-label', `Video : ${filteredMedia[index].title}`);
+                modalVideo.controls = true;
+                modalVideo.autoplay = true;
+            }
             const modalTitle = document.createElement('div');
             const modalTitlesav = document.createElement('div');
             modalTitle.textContent = filteredMedia[index].title;
@@ -264,11 +181,15 @@ function showSlide(index) {
             }
         }
 
+  
+
+
         function addFilterSection() {
+   
             // Handle filter change event
             function handleFilterChange() {
                 const selectedValue = dropdownOptions.querySelector('.selected').getAttribute('data-value');
-
+        
                 if (selectedValue === 'date') {
                     filterMediaByDate();
                 } else if (selectedValue === 'title') {
@@ -277,97 +198,97 @@ function showSlide(index) {
                     filterMediaByPopularity();
                 }
             }
-
+        
             // Filter media by date
             function filterMediaByDate() {
                 filteredMedia.sort((a, b) => new Date(a.date) - new Date(b.date));
                 renderSlides();
             }
-
+        
             // Filter media by title
             function filterMediaByTitle() {
                 filteredMedia.sort((a, b) => a.title.localeCompare(b.title));
                 renderSlides();
             }
-
+        
             // Filter media by popularity
             function filterMediaByPopularity() {
                 filteredMedia.sort((a, b) => b.likes - a.likes);
                 renderSlides();
             }
-
+        
             // Create filter section elements
             const filterSection = document.createElement('nav');
             filterSection.classList.add('filter-section');
-
+        
             const filterLabel = document.createElement('label');
             filterLabel.setAttribute('for', 'filter-select');
             filterLabel.textContent = 'Trier par :';
-
+        
             const dropdownContainer = document.createElement('nav');
             dropdownContainer.classList.add('dropdown');
-
+        
             const dropdownLabel = document.createElement('span');
             dropdownLabel.classList.add('dropdown-label');
             dropdownLabel.textContent = 'Date';
-
+        
             const dropdownIcon = document.createElement('span');
             dropdownIcon.classList.add('dropdown-icon');
-
+        
             const arrowUp = document.createElement('img');
             arrowUp.src = './assets/images/Vectorarrowup.png';
             arrowUp.classList.add('arrowUp');
             dropdownIcon.appendChild(arrowUp);
-
+        
             const dropdownOptions = document.createElement('ul');
             dropdownOptions.classList.add('dropdown-options');
             dropdownOptions.setAttribute('tabindex', '0');
-
+        
             const dropdownOptionDate = document.createElement('li');
             dropdownOptionDate.textContent = 'Date';
             dropdownOptionDate.setAttribute('data-value', 'date');
             dropdownOptionDate.classList.add('selected');
             dropdownOptionDate.setAttribute('tabindex', '0');
-
+        
             const dropdownOptionTitle = document.createElement('li');
             dropdownOptionTitle.textContent = 'Titre';
             dropdownOptionTitle.setAttribute('data-value', 'title');
             dropdownOptionTitle.setAttribute('tabindex', '0');
-
+        
             const dropdownOptionPopularity = document.createElement('li');
             dropdownOptionPopularity.textContent = 'Popularité';
             dropdownOptionPopularity.setAttribute('data-value', 'popularity');
             dropdownOptionPopularity.setAttribute('tabindex', '0');
-
-
+        
+        
             dropdownOptions.appendChild(dropdownOptionDate);
             dropdownOptions.appendChild(dropdownOptionTitle);
             dropdownOptions.appendChild(dropdownOptionPopularity);
-
+        
             dropdownContainer.appendChild(dropdownLabel);
             dropdownContainer.appendChild(dropdownIcon);
             dropdownContainer.appendChild(dropdownOptions);
-
+        
             filterSection.appendChild(filterLabel);
             filterSection.appendChild(dropdownContainer);
-
+        
             const sliderContainer = document.querySelector('.photo_section');
             sliderContainer.parentNode.insertBefore(filterSection, sliderContainer);
-
+        
             // Toggle dropdown visibility and update selected value
             dropdownContainer.addEventListener('mouseenter', function () {
                 dropdownIcon.classList.toggle('dropdown-anim');
                 dropdownOptions.classList.toggle('show');
-
-
+        
+        
             });
-
-
+        
+        
             dropdownOptions.addEventListener('click', function (event) {
                 if (event.target.tagName === 'LI') {
                     const selectedOption = dropdownOptions.querySelector('.selected');
                     const selectedValue = event.target.getAttribute('data-value');
-
+        
                     if (selectedOption !== event.target) {
                         selectedOption.classList.remove('selected'); // Remove the 'selected' class from the previously selected option
                         event.target.classList.add('selected'); // Add the 'selected' class to the newly selected option
@@ -376,7 +297,7 @@ function showSlide(index) {
                     }
                 }
             });
-
+        
             // Close dropdown on click outside
             document.addEventListener('click', function (event) {
                 if (!dropdownContainer.contains(event.target)) {
@@ -384,7 +305,7 @@ function showSlide(index) {
                     dropdownOptions.classList.remove('show');
                 }
             });
-
+        
             // Show dropdown options on keyboard navigation
             dropdownContainer.addEventListener('keydown', function (event) {
                 if (event.code === 'Space' || event.code === 'Enter') {
@@ -394,13 +315,13 @@ function showSlide(index) {
                     dropdownOptions.focus();
                 }
             });
-
+        
             // Handle keyboard navigation within dropdown options
             dropdownOptions.addEventListener('keydown', function (event) {
                 const selectedOption = dropdownOptions.querySelector('.selected');
                 const firstOption = dropdownOptions.firstElementChild;
                 const lastOption = dropdownOptions.lastElementChild;
-
+        
                 if (event.code === 'ArrowUp' && selectedOption !== firstOption) {
                     event.preventDefault();
                     selectedOption.classList.remove('selected');
@@ -408,7 +329,7 @@ function showSlide(index) {
                     dropdownLabel.textContent = selectedOption.previousElementSibling.textContent;
                     handleFilterChange();
                 }
-
+        
                 if (event.code === 'ArrowDown' && selectedOption !== lastOption) {
                     event.preventDefault();
                     selectedOption.classList.remove('selected');
@@ -416,16 +337,19 @@ function showSlide(index) {
                     dropdownLabel.textContent = selectedOption.nextElementSibling.textContent;
                     handleFilterChange();
                 }
-
+        
                 if (event.code === 'Escape') {
                     dropdownIcon.classList.remove('dropdown-anim');
                     dropdownOptions.classList.remove('show');
                 }
             });
+        
         }
-
-        renderSlides();
         addFilterSection();
+
+
+
+
     } catch (error) {
         console.error('Error:', error);
     }
