@@ -80,6 +80,8 @@ async function getPhotographers() {
                 showSlide(index);
             });
         }
+  
+        renderSlides();
 
         // Function to open the image modal
         function openImageModal(index) {
