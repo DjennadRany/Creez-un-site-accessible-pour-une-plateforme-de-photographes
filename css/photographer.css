@@ -300,6 +300,12 @@ p.city {
     grid-template-columns: 1fr 0.5fr;
     margin-top: 1em;
 }
+
+.sousart {
+  display: flex;
+  width: 100%;
+}
+
 p.ligne {
     width: 100%;
     margin: auto;
