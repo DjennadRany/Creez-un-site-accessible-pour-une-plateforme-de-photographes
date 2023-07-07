@@ -1,6 +1,21 @@
 import Article from '../module/articlemodule.js'
+import FilterSection from '../module/filtermodule.js'
 
 
+
+  
+
+
+
+
+
+
+
+// Fonction principale pour récupérer les photographes
+async function getPhotographers() {
+    try {
+
+        
 const response = await fetch('./data/photographers.json');
 const data = await response.json();
 console.log(data.photographers);
@@ -14,14 +29,6 @@ console.log(id);
 const filteredMedia = data.media.filter(media => media.photographerId === parseInt(id));
 console.log(filteredMedia);
 // Function to render a slide
-
-
-
-
-
-// Fonction principale pour récupérer les photographes
-async function getPhotographers() {
-    try {
 
         function showSlide(index) {
             const media = filteredMedia[index];
@@ -187,169 +194,117 @@ async function getPhotographers() {
 
 
         function addFilterSection() {
-   
+            // Create an instance of FilterSection
+            const filterSection = new FilterSection();
+          
+            // Access the elements from the FilterSection instance
+            const dropdownContainer = filterSection.dropdownContainer;
+            const dropdownOptions = filterSection.dropdownOptions;
+            const dropdownIcon = filterSection.dropdownIcon;
+            const dropdownLabel = filterSection.dropdownLabel;
+          
             // Handle filter change event
             function handleFilterChange() {
-                const selectedValue = dropdownOptions.querySelector('.selected').getAttribute('data-value');
-        
-                if (selectedValue === 'date') {
-                    filterMediaByDate();
-                } else if (selectedValue === 'title') {
-                    filterMediaByTitle();
-                } else if (selectedValue === 'popularity') {
-                    filterMediaByPopularity();
-                }
+              const selectedValue = dropdownOptions.querySelector('.selected').getAttribute('data-value');
+          
+              if (selectedValue === 'date') {
+                filterMediaByDate();
+              } else if (selectedValue === 'title') {
+                filterMediaByTitle();
+              } else if (selectedValue === 'popularity') {
+                filterMediaByPopularity();
+              }
             }
-        
+          
             // Filter media by date
             function filterMediaByDate() {
-                filteredMedia.sort((a, b) => new Date(a.date) - new Date(b.date));
-                renderSlides();
+              filteredMedia.sort((a, b) => new Date(a.date) - new Date(b.date));
+              renderSlides();
             }
-        
+          
             // Filter media by title
             function filterMediaByTitle() {
-                filteredMedia.sort((a, b) => a.title.localeCompare(b.title));
-                renderSlides();
+              filteredMedia.sort((a, b) => a.title.localeCompare(b.title));
+              renderSlides();
             }
-        
+          
             // Filter media by popularity
             function filterMediaByPopularity() {
-                filteredMedia.sort((a, b) => b.likes - a.likes);
-                renderSlides();
+              filteredMedia.sort((a, b) => b.likes - a.likes);
+              renderSlides();
             }
-        
-            // Create filter section elements
-            const filterSection = document.createElement('nav');
-            filterSection.classList.add('filter-section');
-        
-            const filterLabel = document.createElement('label');
-            filterLabel.setAttribute('for', 'filter-select');
-            filterLabel.textContent = 'Trier par :';
-        
-            const dropdownContainer = document.createElement('nav');
-            dropdownContainer.classList.add('dropdown');
-        
-            const dropdownLabel = document.createElement('span');
-            dropdownLabel.classList.add('dropdown-label');
-            dropdownLabel.textContent = 'Date';
-        
-            const dropdownIcon = document.createElement('span');
-            dropdownIcon.classList.add('dropdown-icon');
-        
-            const arrowUp = document.createElement('img');
-            arrowUp.src = './assets/images/Vectorarrowup.png';
-            arrowUp.classList.add('arrowUp');
-            dropdownIcon.appendChild(arrowUp);
-        
-            const dropdownOptions = document.createElement('ul');
-            dropdownOptions.classList.add('dropdown-options');
-            dropdownOptions.setAttribute('tabindex', '0');
-        
-            const dropdownOptionDate = document.createElement('li');
-            dropdownOptionDate.textContent = 'Date';
-            dropdownOptionDate.setAttribute('data-value', 'date');
-            dropdownOptionDate.classList.add('selected');
-            dropdownOptionDate.setAttribute('tabindex', '0');
-        
-            const dropdownOptionTitle = document.createElement('li');
-            dropdownOptionTitle.textContent = 'Titre';
-            dropdownOptionTitle.setAttribute('data-value', 'title');
-            dropdownOptionTitle.setAttribute('tabindex', '0');
-        
-            const dropdownOptionPopularity = document.createElement('li');
-            dropdownOptionPopularity.textContent = 'Popularité';
-            dropdownOptionPopularity.setAttribute('data-value', 'popularity');
-            dropdownOptionPopularity.setAttribute('tabindex', '0');
-        
-        
-            dropdownOptions.appendChild(dropdownOptionDate);
-            dropdownOptions.appendChild(dropdownOptionTitle);
-            dropdownOptions.appendChild(dropdownOptionPopularity);
-        
-            dropdownContainer.appendChild(dropdownLabel);
-            dropdownContainer.appendChild(dropdownIcon);
-            dropdownContainer.appendChild(dropdownOptions);
-        
-            filterSection.appendChild(filterLabel);
-            filterSection.appendChild(dropdownContainer);
-        
-            const sliderContainer = document.querySelector('.photo_section');
-            sliderContainer.parentNode.insertBefore(filterSection, sliderContainer);
-        
+          
             // Toggle dropdown visibility and update selected value
             dropdownContainer.addEventListener('mouseenter', function () {
-                dropdownIcon.classList.toggle('dropdown-anim');
-                dropdownOptions.classList.toggle('show');
-        
-        
+              dropdownIcon.classList.toggle('dropdown-anim');
+              dropdownOptions.classList.toggle('show');
             });
-        
-        
-            dropdownOptions.addEventListener('click', function (event) {
-                if (event.target.tagName === 'LI') {
-                    const selectedOption = dropdownOptions.querySelector('.selected');
-                    const selectedValue = event.target.getAttribute('data-value');
-        
-                    if (selectedOption !== event.target) {
-                        selectedOption.classList.remove('selected'); // Remove the 'selected' class from the previously selected option
-                        event.target.classList.add('selected'); // Add the 'selected' class to the newly selected option
-                        dropdownLabel.textContent = event.target.textContent; // Update the dropdown label text
-                        handleFilterChange(); // Call the filter change handler function
-                    }
+          
+            filterSection.dropdownOptions.addEventListener('click', function (event) {
+              if (event.target.tagName === 'LI') {
+                const selectedOption = dropdownOptions.querySelector('.selected');
+                const selectedValue = event.target.getAttribute('data-value');
+          
+                if (selectedOption !== event.target) {
+                  selectedOption.classList.remove('selected');
+                  event.target.classList.add('selected');
+                  dropdownLabel.textContent = event.target.textContent;
+                  handleFilterChange();
                 }
+              }
             });
-        
+          
             // Close dropdown on click outside
             document.addEventListener('click', function (event) {
-                if (!dropdownContainer.contains(event.target)) {
-                    dropdownIcon.classList.remove('dropdown-anim');
-                    dropdownOptions.classList.remove('show');
-                }
+              if (!dropdownContainer.contains(event.target)) {
+                dropdownIcon.classList.remove('dropdown-anim');
+                dropdownOptions.classList.remove('show');
+              }
             });
-        
+          
             // Show dropdown options on keyboard navigation
             dropdownContainer.addEventListener('keydown', function (event) {
-                if (event.code === 'Space' || event.code === 'Enter') {
-                    event.preventDefault();
-                    dropdownIcon.classList.toggle('dropdown-anim');
-                    dropdownOptions.classList.toggle('show');
-                    dropdownOptions.focus();
-                }
+              if (event.code === 'Space' || event.code === 'Enter') {
+                event.preventDefault();
+                dropdownIcon.classList.toggle('dropdown-anim');
+                dropdownOptions.classList.toggle('show');
+                dropdownOptions.focus();
+              }
             });
-        
+          
             // Handle keyboard navigation within dropdown options
             dropdownOptions.addEventListener('keydown', function (event) {
-                const selectedOption = dropdownOptions.querySelector('.selected');
-                const firstOption = dropdownOptions.firstElementChild;
-                const lastOption = dropdownOptions.lastElementChild;
-        
-                if (event.code === 'ArrowUp' && selectedOption !== firstOption) {
-                    event.preventDefault();
-                    selectedOption.classList.remove('selected');
-                    selectedOption.previousElementSibling.classList.add('selected');
-                    dropdownLabel.textContent = selectedOption.previousElementSibling.textContent;
-                    handleFilterChange();
-                }
-        
-                if (event.code === 'ArrowDown' && selectedOption !== lastOption) {
-                    event.preventDefault();
-                    selectedOption.classList.remove('selected');
-                    selectedOption.nextElementSibling.classList.add('selected');
-                    dropdownLabel.textContent = selectedOption.nextElementSibling.textContent;
-                    handleFilterChange();
-                }
-        
-                if (event.code === 'Escape') {
-                    dropdownIcon.classList.remove('dropdown-anim');
-                    dropdownOptions.classList.remove('show');
-                }
+              const selectedOption = dropdownOptions.querySelector('.selected');
+              const firstOption = dropdownOptions.firstElementChild;
+              const lastOption = dropdownOptions.lastElementChild;
+          
+              if (event.code === 'ArrowUp' && selectedOption !== firstOption) {
+                event.preventDefault();
+                selectedOption.classList.remove('selected');
+                selectedOption.previousElementSibling.classList.add('selected');
+                dropdownLabel.textContent = selectedOption.previousElementSibling.textContent;
+                handleFilterChange();
+              }
+          
+              if (event.code === 'ArrowDown' && selectedOption !== lastOption) {
+                event.preventDefault();
+                selectedOption.classList.remove('selected');
+                selectedOption.nextElementSibling.classList.add('selected');
+                dropdownLabel.textContent = selectedOption.nextElementSibling.textContent;
+                handleFilterChange();
+              }
+          
+              if (event.code === 'Escape') {
+                dropdownIcon.classList.remove('dropdown-anim');
+                dropdownOptions.classList.remove('show');
+              }
             });
-        
-        }
-        addFilterSection();
-
-
+          
+            // Append the filterSection to the DOM
+            const sliderContainer = document.querySelector('.photo_section');
+            sliderContainer.parentNode.insertBefore(filterSection.filterSection, sliderContainer);
+          }addFilterSection()
+          
 
 
     } catch (error) {

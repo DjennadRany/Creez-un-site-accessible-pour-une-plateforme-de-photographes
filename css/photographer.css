@@ -307,7 +307,7 @@ p.city {
 }
 
 p.ligne {
-    width: 100%;
+    width: 80%;
     margin: auto;
     color: #901c1c;
     font-weight: bold;
@@ -316,7 +316,7 @@ p.ligne {
 }
 
 .lowgne{
-    width: 100%;
+    width: 20%;
     margin: auto;
     text-align: right;
     color: #901c1c;
