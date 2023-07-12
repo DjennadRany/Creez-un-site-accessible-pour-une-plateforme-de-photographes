@@ -61,3 +61,4 @@ function displayPhotographersData() {
       console.log('An error occurred:', error);
     });
 }
+
