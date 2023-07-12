@@ -1,4 +1,5 @@
 import PhotographerInfo from '../module/headgraphermodule.js'
+import App from '../module/app.js';
 
 // Fonction pour récupérer les informations du photographe en fonction de son ID
 function getPhotographerById(photographers, photographerId) {
@@ -22,6 +23,7 @@ fetch('./data/photographers.json')
     if (photographer) {
       // Créer une instance de la classe PhotographerInfo avec les informations du photographe
       const photographerInfo = new PhotographerInfo(photographer);
+      const apply = new App(photographer);
 
       // Utiliser l'instance pour afficher les données du photographe
       photographerInfo.displayInfo();
@@ -50,6 +52,12 @@ function displayPhotographersData() {
       if (photographer) {
         // Créer une instance de la classe PhotographerInfo avec les informations du photographe
         const photographerInfo = new PhotographerInfo(photographer);
+       
+ // Créer une instance de la classe App
+ const app = new App();
+  
+// Utiliser l'instance de la classe App pour afficher les données des photographes
+app.displayPhotographersData();
 
         // Utiliser l'instance pour afficher les données du photographe
         photographerInfo.displayInfo();
@@ -61,4 +69,3 @@ function displayPhotographersData() {
       console.log('An error occurred:', error);
     });
 }
-
