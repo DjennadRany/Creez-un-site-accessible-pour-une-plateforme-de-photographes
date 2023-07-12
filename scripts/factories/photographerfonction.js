@@ -51,23 +51,48 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
 
             articleInstance.addToSliderContainer(document.querySelector('.photo_section'));
 
-            articleInstance.figure.addEventListener('click', () => {
-                openImageModal(index);
-            });
+            const totalLikesElement = document.querySelector('.totalLikes');
+let totalLikes = parseInt(totalLikesElement.textContent.split(' ')[0]); // Récupère le nombre total de likes à partir du texte initial
 
-            articleInstance.likes.addEventListener('click', (event) => {
-                event.stopPropagation(); // Empêche la propagation de l'événement de clic sur l'élément parent
+const lowgneElements = document.querySelectorAll('.lowgne');
 
-                media.likes++; // Incrémente le nombre de likes du média
-                articleInstance.likes.textContent = media.likes + '❤'; // Met à jour le texte des likes
+const likedCoeurs = new Map(); // Utilise un Map pour stocker les cœurs déjà likés et leur nombre de likes
 
-                const totalLikesElement = document.querySelector('.totalLikes');
-                if (totalLikesElement) {
-                    let totalLikes = parseInt(totalLikesElement.textContent); // Obtient la valeur actuelle des likes
-                    totalLikes++; // Incrémente le total des likes
-                    totalLikesElement.textContent = totalLikes + ' ❤'; // Met à jour le total des likes
-                }
-            });
+lowgneElements.forEach((lowgneElement) => {
+  const initialLikes = parseInt(lowgneElement.textContent.split('❤')[0]);
+  likedCoeurs.set(lowgneElement, initialLikes); // Initialise chaque cœur avec sa valeur de likes actuelle
+
+  lowgneElement.addEventListener('click', (event) => {
+    event.stopPropagation(); // Empêche la propagation de l'événement de clic sur l'élément parent
+
+    const currentLikes = likedCoeurs.get(lowgneElement); // Récupère le nombre de likes actuel du cœur
+
+    if (currentLikes === initialLikes) {
+      // Clique sur un cœur non liké, incrémente le nombre de likes de 1
+      likedCoeurs.set(lowgneElement, currentLikes + 1);
+      totalLikes++;
+      lowgneElement.textContent = (currentLikes + 1) + '❤';
+      lowgneElement.classList.add('liked');
+    } else {
+      // Clique à nouveau sur le cœur liké, décrémente le nombre de likes de 1
+      likedCoeurs.set(lowgneElement, currentLikes - 1);
+      totalLikes--;
+      lowgneElement.textContent = (currentLikes - 1) + '❤';
+      lowgneElement.classList.remove('liked');
+    }
+
+    totalLikesElement.textContent = totalLikes + ' ❤'; // Met à jour le total des likes
+  });
+});
+
+            
+            
+
+            
+
+            
+            
+            
         }
 
         // Render all the slides
