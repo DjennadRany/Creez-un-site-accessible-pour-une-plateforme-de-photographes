@@ -322,6 +322,7 @@ p.ligne {
     color: #901c1c;
     font-weight: bold;
     float: right;
+    cursor: pointer;
 }
 .filter-section {
   margin: 1em auto;

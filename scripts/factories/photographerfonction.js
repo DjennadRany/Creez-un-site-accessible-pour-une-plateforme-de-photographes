@@ -10,16 +10,16 @@ async function getPhotographers() {
         
 const response = await fetch('./data/photographers.json');
 const data = await response.json();
-console.log(data.photographers);
+
 
 // Get the photographer ID from the URL
 const url = window.location.href;
 const id = url.split("#")[1];
-console.log(id);
+
 
 // Filter media based on photographer ID
 const filteredMedia = data.media.filter(media => media.photographerId === parseInt(id));
-console.log(filteredMedia);
+
 // Function to render a slide
 
         function showSlide(index) {
@@ -227,7 +227,7 @@ console.log(filteredMedia);
             }
           
             // Toggle dropdown visibility and update selected value
-            dropdownContainer.addEventListener('mouseenter', function () {
+            dropdownContainer.addEventListener('click', function () {
               dropdownIcon.classList.toggle('dropdown-anim');
               dropdownOptions.classList.toggle('show');
             });
