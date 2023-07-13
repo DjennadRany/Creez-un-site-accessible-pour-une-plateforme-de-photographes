@@ -45,6 +45,7 @@ h1 {
     align-items: center;
     flex-direction: column;
     margin-top: 3em;
+    cursor: pointer;
 }
 .photo_section article {
     justify-self: center;
@@ -53,6 +54,7 @@ h1 {
     align-items: center;
     flex-direction: column;
     margin-top: 3em;
+    cursor: pointer;
 }
 .photographer_section article h2 {
     color: #D3573C;
@@ -159,3 +161,38 @@ article p {
     border-radius: 5px;
 }
 
+@media only screen and (max-width : 500px){
+    .photo_section {
+        display: grid;
+        grid-template-columns: 90%;
+        margin: auto;
+        width: 80%;
+        justify-content: space-around;
+    }
+    .photograph-header {
+        background-color: #FAFAFA;
+        height: auto;
+        margin: 0 100px;
+        display: grid;
+        grid-template-columns: 90%;
+        padding: 1em;
+        gap: 20px;
+    }
+    
+element.style {
+}
+img.portrait {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    float: right;
+    background-position: center;
+    object-fit: cover;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    -ms-border-radius: 150px;
+    -o-border-radius: 150px;
+    margin: auto;
+}
+    }
