@@ -1,11 +1,9 @@
 export default class Article {
   constructor(media) {
     this.article = document.createElement('div');
-    this.sousart = document.createElement('div');
     this.article.classList.add('blockouf');
-
+    this.sousart = document.createElement('div');
     this.figure = document.createElement('article');
-
     this.title = document.createElement('p');
     this.likes = document.createElement('p');
     this.date = document.createElement('span');
@@ -33,6 +31,9 @@ export default class Article {
     this.sousart.appendChild(this.likes);
 
     this.setTabindex(); // Appel de la méthode pour définir le tabindex
+
+   
+  
   }
 
   setTabindex() {
@@ -46,8 +47,10 @@ export default class Article {
     });
   }
 
+
+
+
   addToSliderContainer(sliderContainer) {
     sliderContainer.appendChild(this.article);
   }
 }
-

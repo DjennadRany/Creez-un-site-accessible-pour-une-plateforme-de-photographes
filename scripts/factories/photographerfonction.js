@@ -24,7 +24,10 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
 
         function showSlide(index) {
             const media = filteredMedia[index];
-            const articleInstance = new Article(media);
+            const articleInstance = new Article(media, index);
+
+
+
 
             if (media.image !== undefined) {
                 const image = document.createElement('img');
@@ -48,6 +51,13 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
                 blackSquare.appendChild(playIcon);
                 articleInstance.figure.appendChild(blackSquare);
             }
+
+
+            articleInstance.article.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter') {
+                openImageModal(index);
+              }
+            });
 
             articleInstance.addToSliderContainer(document.querySelector('.photo_section'));
 
@@ -103,6 +113,8 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
 
         // Function to open the image modal
         function openImageModal(index) {
+
+       
             const existingModal = document.querySelector('.image-modal');
             if (existingModal) {
                 closeModal();
@@ -202,8 +214,7 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
         }
 
     
-        const instance = new Article(media);
-        instance.addToSliderContainer(sliderContainer);
+      
 
         function addFilterSection() {
             // Create an instance of FilterSection
