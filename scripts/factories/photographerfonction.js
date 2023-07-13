@@ -201,8 +201,9 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
             }
         }
 
-  
-
+    
+        const instance = new Article(media);
+        instance.addToSliderContainer(sliderContainer);
 
         function addFilterSection() {
             // Create an instance of FilterSection
@@ -316,7 +317,7 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
             sliderContainer.parentNode.insertBefore(filterSection.filterSection, sliderContainer);
           }addFilterSection()
           
-
+         
 
     } catch (error) {
         console.error('Error:', error);
