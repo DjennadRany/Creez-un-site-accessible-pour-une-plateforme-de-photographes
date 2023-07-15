@@ -55,7 +55,7 @@ export default class PhotographerInfo {
             <input id="last_name_input" tabindex="2" />
           </div>
           <div>
-            <label for="email_input">e-mail</label>
+            <label for="email_input">E-mail</label>
             <input type="email" id="email_input" tabindex="3" />
           </div>
           <div>
