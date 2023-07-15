@@ -26,7 +26,7 @@ fetch('./data/photographers.json')
       const apply = new App(photographer);
 
       // Utiliser l'instance pour afficher les données du photographe
-      photographerInfo.displayInfo();
+     
     }
   })
   .catch(error => {
@@ -60,7 +60,7 @@ function displayPhotographersData() {
 app.displayPhotographersData();
 
         // Utiliser l'instance pour afficher les données du photographe
-        photographerInfo.displayInfo();
+        
       } else {
         console.log('Photographer not found');
       }

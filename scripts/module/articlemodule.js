@@ -32,23 +32,23 @@ export default class Article {
 
     this.setTabindex(); // Appel de la méthode pour définir le tabindex
 
-   
-  
+    // ...
+
+    // Ajoutez d'autres manipulations DOM ou fonctionnalités selon vos besoins
   }
 
   setTabindex() {
-    const articles = document.getElementsByClassName('blockouf');
-    const count = articles.length;
-    Array.from(articles).forEach((article, index) => {
-      const tabindexValue = index + 1;
-      article.setAttribute('tabindex', tabindexValue.toString());
-      article.setAttribute('aria-setsize', count.toString());
-      article.setAttribute('aria-posinset', tabindexValue.toString());
-    });
+    this.article.setAttribute('tabindex', '0');
+    this.article.setAttribute('aria-setsize', '0');
+    this.article.setAttribute('aria-posinset', '0');
+    this.title.setAttribute('tabindex', '0');
+    this.title.setAttribute('aria-setsize', '0');
+    this.title.setAttribute('aria-posinset', '0');
+    this.likes.setAttribute('tabindex', '0');
+    this.likes.setAttribute('aria-setsize', '0');
+    this.likes.setAttribute('aria-posinset', '0');
+    
   }
-
-
-
 
   addToSliderContainer(sliderContainer) {
     sliderContainer.appendChild(this.article);

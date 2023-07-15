@@ -2,6 +2,7 @@
 export default class App {
     constructor() {
       this.photographers = [];
+      this.PhotographerFactory = [];
     }
   
     // Méthode pour récupérer les informations du photographe en fonction de son ID
@@ -15,18 +16,24 @@ export default class App {
       const photographerId = parseInt(url.split('#')[1]);
       return photographerId ? this.getPhotographerById(photographerId) : null;
     }
-  
+    createPhotographer(photographerData) {
+      // Implémentation de la création du photographe à partir des données
+      const photographer = {
+        id: photographerData.id,
+        name: photographerData.name,
+        // Ajoutez d'autres propriétés en fonction de la structure des données du photographe
+      };
+      return photographer;
+    }
+    
     // Méthode pour charger les données des photographes à partir du fichier JSON
     loadPhotographersData() {
       fetch('./data/photographers.json')
         .then(response => response.json())
         .then(data => {
-          this.photographers = data.photographers.map(photographerData => PhotographerFactory.createPhotographer(photographerData));
+          this.photographers = data.photographers.map(photographerData => this.createPhotographer(photographerData));
           const photographer = this.getPhotographerInfoFromURL();
-          if (photographer) {
-            const photographerInfo = new PhotographerInfo(photographer);
-            photographerInfo.incrementPhotographerInfo();
-          }
+         
         })
         .catch(error => {
           console.log('Une erreur s\'est produite lors de la récupération du fichier JSON :', error);

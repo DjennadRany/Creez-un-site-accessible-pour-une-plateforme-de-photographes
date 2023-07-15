@@ -1,8 +1,6 @@
 import Article from '../module/articlemodule.js'
 import FilterSection from '../module/filtermodule.js'
 
-
-
 // Fonction principale pour récupérer les photographes
 async function getPhotographers() {
     try {
@@ -115,14 +113,10 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
         function openImageModal(index) {
 
        
-            const existingModal = document.querySelector('.image-modal');
-            if (existingModal) {
-                closeModal();
-            }
-
+       
             const modal = document.createElement('div');
             modal.classList.add('image-modal');
-
+            modal.setAttribute('tabindex', '-1');
             const modalImage = document.createElement('img');
             if (filteredMedia[index].image) {
                 modalImage.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].image}`;
@@ -203,6 +197,12 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
             }
 
             document.body.appendChild(modal);
+           
+        
+            
+            
+            // Définir le focus sur la modal
+            modal.focus();
         }
 
         // Function to close the image modal
@@ -262,7 +262,16 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
               dropdownIcon.classList.toggle('dropdown-anim');
               dropdownOptions.classList.toggle('show');
             });
-          
+            filterSection.dropdownOptions.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter') {
+                const selectedOption = dropdownOptions.querySelector('.selected');
+                const selectedValue = event.target.getAttribute('data-value');
+                selectedOption.classList.remove('selected');
+                event.target.classList.add('selected');
+                dropdownLabel.textContent = event.target.textContent;
+               handleFilterChange(selectedValue);
+              }
+            });
             filterSection.dropdownOptions.addEventListener('click', function (event) {
               if (event.target.tagName === 'LI') {
                 const selectedOption = dropdownOptions.querySelector('.selected');
@@ -272,11 +281,12 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
                   selectedOption.classList.remove('selected');
                   event.target.classList.add('selected');
                   dropdownLabel.textContent = event.target.textContent;
-                  handleFilterChange();
+                  handleFilterChange(selectedValue);
                 }
               }
             });
           
+            
             // Close dropdown on click outside
             document.addEventListener('click', function (event) {
               if (!dropdownContainer.contains(event.target)) {
@@ -294,7 +304,7 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
                 dropdownOptions.focus();
               }
             });
-          
+           
             // Handle keyboard navigation within dropdown options
             dropdownOptions.addEventListener('keydown', function (event) {
               const selectedOption = dropdownOptions.querySelector('.selected');
@@ -326,9 +336,11 @@ const filteredMedia = data.media.filter(media => media.photographerId === parseI
             // Append the filterSection to the DOM
             const sliderContainer = document.querySelector('.photo_section');
             sliderContainer.parentNode.insertBefore(filterSection.filterSection, sliderContainer);
+
+           
           }addFilterSection()
           
-         
+
 
     } catch (error) {
         console.error('Error:', error);
