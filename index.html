@@ -1,71 +1,27 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-    <title>Les Petits Plats</title>
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.js"></script>
-
-</head>
-
-<body>
+<html lang="fr">
+  <meta charset="utf-8">
+  <title>Fisheye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <head>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <title>Fisheye - Accueil</title>
+  </head>
+  <body dir="ltr">
     <header>
-        <h1 style="display: none;">Les Petits Plats</h1>
-
-        <img src="asset/img/Logo.png" alt="logo">
-        <h2>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES</h2>
-        <div id="search-bar">
-            <input type="text" id="main-search-input" placeholder="Rechercher...">
-        </div>
+      <a href="./index.html"><img src="assets/images/logo.png" class="logo" alt="logo Fisheye" aria-label="logo Fisheye"/></a>
+        <h1>Nos photographes</h1>
     </header>
-
-    <main>
-        <div class="filters">
-            <div class="filter">
-              <legend>Ingredients</legend>
-              <div class="container">
-                <input type="text" id="ingredients-search-input" list="ingredients-options" placeholder="Search ingredients">
-                <datalist id="ingredients-options"></datalist>
-              </div>
-            </div>
-            <div class="filter">
-              <legend>Utensils</legend>
-              <div class="container">
-                <input type="text" id="utensils-search-input" list="utensils-options" placeholder="Search utensils">
-                <datalist id="utensils-options"></datalist>
-              </div>
-            </div>
-            <div class="filter">
-              <legend>Appliance</legend>
-              <div class="container">
-                <input type="text" id="appliance-search-input" list="appliance-options" placeholder="Search appliance">
-                <datalist id="appliance-options"></datalist>
-              </div>
-            </div>
-            <ul id="autocomplete-suggestions"></ul>
-          </div>
-          
-          
-          
-          
+    <main id="main">
+        <div class="photographer_section"></div>
+     
         
-        
-        <div id="selected-keywords-container">
-            <ul id="keyword-tags-list"></ul>
-        </div>
-        <div id="results">
-            <!-- Résultats de recherche ici -->
-        </div>
     </main>
+    
+    <script src="./scripts/pages/index.js"></script>
 
-    <script src="./script/app.js" type="module"></script>
-    <script src="./script/filter.js" type="module"></script>
-</body>
-
+  </body>
 </html>
