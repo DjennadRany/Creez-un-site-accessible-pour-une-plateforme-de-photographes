@@ -134,8 +134,8 @@ export default class PhotographerInfo {
         return false;
       }
 
-      if (!nameRegex.test(lastName)) {
-        displayError(document.getElementById('last_name_input'), "Le nom est invalide");
+      if (!emailRegex.test(mail)) {
+        displayError(document.getElementById('email_input'), "L'adresse email est invalide");
         return false;
       }
 
@@ -144,6 +144,12 @@ export default class PhotographerInfo {
         return false;
       }
 
+      if (!nameRegex.test(message)) {
+        displayError(document.getElementById('message_input'), "Le message est invalide");
+        return false;
+      }
+
+      
       sendMessage();
 
       return true;
