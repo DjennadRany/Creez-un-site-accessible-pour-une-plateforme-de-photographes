@@ -133,16 +133,17 @@ export default class PhotographerInfo {
         displayError(document.getElementById('first_name_input'), "Le prénom est invalide");
         return false;
       }
+      if (!nameRegex.test(lastName)) {
+        displayError(document.getElementById('last_name_input'), "Le nom est invalide");
+        return false;
+      }
+
 
       if (!emailRegex.test(mail)) {
         displayError(document.getElementById('email_input'), "L'adresse email est invalide");
         return false;
       }
 
-      if (!emailRegex.test(mail)) {
-        displayError(document.getElementById('email_input'), "L'adresse email est invalide");
-        return false;
-      }
 
       if (!nameRegex.test(message)) {
         displayError(document.getElementById('message_input'), "Le message est invalide");
