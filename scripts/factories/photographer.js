@@ -1,17 +1,6 @@
 import PhotographerInfo from '../module/headgraphermodule.js'
 import App from '../module/app.js';
 
-// Fonction pour récupérer les informations du photographe en fonction de son ID
-function getPhotographerById(photographers, photographerId) {
-  return photographers.find(photographer => photographer.id === photographerId);
-}
-
-// Fonction pour récupérer les informations du photographe en fonction de l'ID dans l'URL
-function getPhotographerInfoFromURL(photographers) {
-  const url = window.location.href;
-  const photographerId = parseInt(url.split('#')[1]);
-  return photographerId ? getPhotographerById(photographers, photographerId) : null;
-}
 
 
 // Appel de la fonction pour récupérer le contenu du fichier JSON
@@ -33,3 +22,14 @@ fetch('./data/photographers.json')
     console.log("Une erreur s'est produite lors de la récupération du fichier JSON :", error);
   });
 
+// Fonction pour récupérer les informations du photographe en fonction de son ID
+function getPhotographerById(photographers, photographerId) {
+  return photographers.find(photographer => photographer.id === photographerId);
+}
+
+// Fonction pour récupérer les informations du photographe en fonction de l'ID dans l'URL
+function getPhotographerInfoFromURL(photographers) {
+  const url = window.location.href;
+  const photographerId = parseInt(url.split('#')[1]);
+  return photographerId ? getPhotographerById(photographers, photographerId) : null;
+}

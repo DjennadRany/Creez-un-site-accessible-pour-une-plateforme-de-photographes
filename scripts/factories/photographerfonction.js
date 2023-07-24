@@ -8,6 +8,8 @@ async function getPhotographers() {
     const response = await fetch('./data/photographers.json');
     const data = await response.json();
 
+
+
     // Get the photographer ID from the URL
     const url = window.location.href;
     const id = url.split("#")[1];
@@ -30,6 +32,9 @@ async function getPhotographers() {
     if (filterContainer) {
       filterContainer.appendChild(filterSectionInstance.getFilterSection());
     }
+
+
+    
 
   } catch (error) {
     console.error('Error:', error);
