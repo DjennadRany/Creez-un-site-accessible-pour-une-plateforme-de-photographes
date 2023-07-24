@@ -33,39 +33,3 @@ fetch('./data/photographers.json')
     console.log("Une erreur s'est produite lors de la récupération du fichier JSON :", error);
   });
 
-function displayPhotographersData() {
-  // Obtenir l'URL actuelle
-  const url = window.location.href;
-
-  // Trouver l'ID du photographe après le '#'
-  const idIndex = url.lastIndexOf('#');
-  const photographerId = url.substring(idIndex + 1);
-
-  // Effectuer un appel fetch pour récupérer les données des photographes
-  fetch('./data/photographers.json')
-    .then(response => response.json())
-    .then(data => {
-      // Trouver le photographe correspondant à l'ID
-      const photographer = data.photographers.find(p => p.id === parseInt(photographerId));
-
-      // Vérifier si le photographe existe
-      if (photographer) {
-        // Créer une instance de la classe PhotographerInfo avec les informations du photographe
-        const photographerInfo = new PhotographerInfo(photographer);
-       
- // Créer une instance de la classe App
- const app = new App();
-  
-// Utiliser l'instance de la classe App pour afficher les données des photographes
-app.displayPhotographersData();
-
-        // Utiliser l'instance pour afficher les données du photographe
-        
-      } else {
-        console.log('Photographer not found');
-      }
-    })
-    .catch(error => {
-      console.log('An error occurred:', error);
-    });
-}

@@ -1,4 +1,4 @@
-async function getPhotographers() {
+async function AllPhotographers() {
     try {
         const response = await fetch('./data/photographers.json');
         if (!response.ok) {
@@ -60,4 +60,4 @@ function createParagraph(text) {
     return paragraph;
 }
 
-getPhotographers();
+AllPhotographers();
