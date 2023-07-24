@@ -93,10 +93,7 @@ export default class PhotographerInfo {
       const mail = document.getElementById('email_input').value;
       const message = document.getElementById('message_input').value;
 
-      console.log('Prénom:', firstName);
-      console.log('Nom:', lastName);
-      console.log('Email:', mail);
-      console.log('Message:', message);
+   
 
       closeModal();
     };
@@ -152,7 +149,10 @@ export default class PhotographerInfo {
 
       
       sendMessage();
-
+      console.log('Prénom:', firstName);
+      console.log('Nom:', lastName);
+      console.log('Email:', mail);
+      console.log('Message:', message);
       return true;
     };
 
