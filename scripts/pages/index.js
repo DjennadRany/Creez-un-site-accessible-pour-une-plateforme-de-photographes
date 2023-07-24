@@ -5,7 +5,7 @@ async function AllPhotographers() {
             throw new Error('Looks like there was a problem. Status Code: ' + response.status);
         }
         const data = await response.json();
-        console.log(data.photographers);
+       
         const photographerSection = document.querySelector('.photographer_section');
 
         data.photographers.forEach(item => {
