@@ -1,35 +1,32 @@
-import PhotographerInfo from '../module/headgraphermodule.js'
+import PhotographerInfo from '../module/headGrapherModule.js';
 import App from '../module/app.js';
 
+let photographers; // Variable to store the photographers data
+let photographer; // Variable to store the selected photographer
+const url = window.location.href; // Get the current URL of the page
+const photographerId = parseInt(url.split('#')[1]); // Extract the photographer ID from the URL (assuming it's in the fragment identifier after the '#' symbol)
 
-
-// Appel de la fonction pour récupérer le contenu du fichier JSON
+// Fetch the photographers' data from the JSON file
 fetch('./data/photographers.json')
   .then(response => response.json())
   .then(data => {
-    const photographers = data.photographers;
-    const photographer = getPhotographerInfoFromURL(photographers);
+    photographers = data.photographers; // Store the photographers array from the JSON data
+    photographer = getPhotographerInfoFromURL(); // Get the photographer information based on the ID in the URL
     if (photographer) {
-      // Créer une instance de la classe PhotographerInfo avec les informations du photographe
-      const photographerInfo = new PhotographerInfo(photographer);
-      const apply = new App(photographer);
-
-      // Utiliser l'instance pour afficher les données du photographe
-     
+      const photographerInfo = new PhotographerInfo(photographer); // Create an instance of the PhotographerInfo class with the photographer's information
+      const apply = new App(photographer); // Create an instance of the App class with the photographer's information
     }
   })
   .catch(error => {
-    console.log("Une erreur s'est produite lors de la récupération du fichier JSON :", error);
+    console.log("An error occurred while retrieving the JSON file:", error); // Log an error message if there's an issue with fetching or parsing the JSON
   });
 
-// Fonction pour récupérer les informations du photographe en fonction de son ID
-function getPhotographerById(photographers, photographerId) {
-  return photographers.find(photographer => photographer.id === photographerId);
+// Function to retrieve photographer information based on their ID
+function getPhotographerById(photographerId) {
+  return photographers.find(photographer => photographer.id === photographerId); // Search for the photographer with the specified ID in the photographers array
 }
 
-// Fonction pour récupérer les informations du photographe en fonction de l'ID dans l'URL
-function getPhotographerInfoFromURL(photographers) {
-  const url = window.location.href;
-  const photographerId = parseInt(url.split('#')[1]);
-  return photographerId ? getPhotographerById(photographers, photographerId) : null;
+// Function to retrieve photographer information based on the ID in the URL
+function getPhotographerInfoFromURL() {
+  return photographerId ? getPhotographerById(photographerId) : null; // Return the photographer information if the ID is found, otherwise return null
 }
