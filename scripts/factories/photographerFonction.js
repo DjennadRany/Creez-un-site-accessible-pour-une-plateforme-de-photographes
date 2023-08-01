@@ -3,7 +3,6 @@ import FilterSection from '../module/filtermodule.js'; // Importing the FilterSe
 
 async function getPhotographers() {
   let filterContainer = null; // Declare filterContainer outside the try block
-
   try {
     const response = await fetch('./data/photographers.json'); // Fetching the photographers data from the JSON file
     const data = await response.json(); // Parsing the JSON data
@@ -14,21 +13,20 @@ async function getPhotographers() {
 
     // Filter media based on photographer ID
     const filteredMedia = data.media.filter(media => media.photographerId === parseInt(id)); // Filtering media based on the photographer ID
+
     const sliderContainer = document.querySelector('.photoSection'); // Getting the slider container element
     const filterSectionInstance = new FilterSection(); // Creating an instance of the FilterSection class
 
     filterSectionInstance.addFilterSection(filteredMedia); // Adding the filteredMedia as an argument to the addFilterSection method
 
-    // Loop through each media item and create Article instances for them
     filteredMedia.forEach((media, index) => {
-      var articleInstance = new Article(media); // Creating an instance of the Article class with each media item
+      const articleInstance = new Article(media); // Creating an instance of the Article class with each media item
       articleInstance.addToSliderContainer(sliderContainer); // Adding the media item to the slider container
       articleInstance.showSlide(index, media, filteredMedia); // Displaying the media item in the slider with the corresponding index
     });
 
     // Make sure filterContainer is defined before accessing it
     filterContainer = document.querySelector('.photographerSection'); // Getting the photographer section container element
-
     if (filterContainer) {
       filterContainer.appendChild(filterSectionInstance.getFilterSection()); // Appending the filter section to the photographer section container
     }
