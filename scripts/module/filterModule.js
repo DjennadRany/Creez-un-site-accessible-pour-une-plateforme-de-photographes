@@ -1,4 +1,4 @@
-import Article from './articlemodule.js';
+import Article from './articleModule.js ';
 
 export default class FilterSection {
   constructor() {

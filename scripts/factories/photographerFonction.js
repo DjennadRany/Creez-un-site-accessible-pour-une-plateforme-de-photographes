@@ -1,5 +1,5 @@
-import Article from '../module/articlemodule.js'; // Importing the Article class from the specified module file
-import FilterSection from '../module/filtermodule.js'; // Importing the FilterSection class from the specified module file
+import Article from '../module/articleModule.js ';
+import FilterSection from '../module/filterModule.js '; 
 
 async function getPhotographers() {
   let filterContainer = null; // Declare filterContainer outside the try block
