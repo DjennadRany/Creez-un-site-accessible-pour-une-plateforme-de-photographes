@@ -122,7 +122,7 @@ export default class PhotographerInfo {
     });
 
     // Send button functionality for form validation and sending message
-    const sendButton = document.querySelector('#contactModal button');
+    const sendButton = document.querySelector('#contactModal');
     sendButton.addEventListener('click', (event) => {
       event.preventDefault();
       validateForm();
