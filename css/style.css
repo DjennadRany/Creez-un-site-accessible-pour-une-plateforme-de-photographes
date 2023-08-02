@@ -32,11 +32,11 @@ h1 {
 
 .photoSection {
     display: grid;
-    grid-template-columns: 30% 30% 30%;
+    grid-template-columns: 1fr 1fr 1fr;
     margin: auto;
     width: 80%;
     justify-content: space-around;
-
+    gap: 1em;
 
 }
 
@@ -144,8 +144,8 @@ article p {
 }
 
 .photographerSection .blockouf img {
-    height: 300px;
-    width: 300px;
+    height: 33vh;
+    width: 33vh;
     background-position: center;
     object-fit: cover;
     border-radius: 5px;
@@ -167,46 +167,46 @@ article p {
 }
 
 .photoSection .blockouf img {
-    height: 300px;
-    width: 300px;
+    height: 33vh;
+    width: 33vh;
     background-position: center;
     object-fit: cover;
     border-radius: 5px;
 }
 
-@media only screen and (max-width : 500px) {
-    .photoSection {
-        display: grid;
-        grid-template-columns: 90%;
-        margin: auto;
-        width: 80%;
-        justify-content: space-around;
-    }
+@media only screen and (max-width: 920px) {
 
-    .photographHeader {
-        background-color: #FAFAFA;
-        height: auto;
-        margin: 0 100px;
-        display: grid;
-        grid-template-columns: 90%;
-        padding: 1em;
-        gap: 20px;
-    }
+    
 
-
-
-    img.portrait {
-        width: 200px;
-        height: 200px;
-        position: relative;
-        float: right;
-        background-position: center;
-        object-fit: cover;
-        border-radius: 150px;
-        -webkit-border-radius: 150px;
-        -moz-border-radius: 150px;
-        -ms-border-radius: 150px;
-        -o-border-radius: 150px;
-        margin: auto;
-    }
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 90px;
+    flex-wrap: wrap;
+    padding: 1em;
 }
+h1 {
+    color: #901C1C;
+    margin: auto;
+    margin-right: auto;
+}
+    .photographerSection {
+      grid-template-columns: 100%;
+      gap: 2em;
+      justify-items: center;
+    }
+  
+    .photoSection {
+      display: grid;
+      grid-template-columns: 90%;
+      gap: 2em;
+      margin: auto;
+      width: 80%;
+      justify-content: center;
+    }
+  
+ 
+  }
+  
