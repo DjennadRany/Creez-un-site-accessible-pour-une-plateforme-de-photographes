@@ -4,7 +4,7 @@
 
 .photographHeader {
   background-color: #FAFAFA;
-  height: 300px;
+  height: 33vh;
   margin: 0 100px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -125,8 +125,8 @@ form textarea {
 }
 
 .imageModal img {
-  width: 750px;
-  height: 750px;
+  width: 90vh;
+  height: 90vh;
   object-fit: cover;
   margin: 0 auto;
 }
@@ -195,16 +195,16 @@ img.suivan {
 }
 
 video {
-  width: 750px;
-  height: 750px;
+  width: 90vh;
+  height: 90vh;
   object-fit: cover;
   margin: 0 auto;
 }
 
 .blackSquare {
   background-color: black;
-  width: 300px;
-  height: 300px;
+  width: 33vh;
+  height: 33vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -222,13 +222,13 @@ video {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 300px;
-  height: 200px;
+  width: 32vh;
+  height: 20vh;
 }
 
 img.portrait {
-  width: 300px;
-  height: 300px;
+  width: 33vh;
+  height: 33vh;
   position: relative;
   float: right;
   background-position: center;
@@ -429,4 +429,74 @@ label {
   -moz-border-radius: 0px 0px 4px 4px;
   -ms-border-radius: 0px 0px 4px 4px;
   -o-border-radius: 0px 0px 4px 4px;
+}
+
+@media only screen and (max-width: 920px) {
+
+
+  .photographHeader {
+    gap: 20px;
+    background-color: #FAFAFA;
+    height: auto;
+    margin: auto;
+    display: grid;
+    grid-template-columns: auto;
+    padding: 1em;
+  }
+
+  img.portrait {
+    width: 33vh ;
+    height: 33vh;
+    float: none;
+    margin: 0 auto;
+  }
+
+  .imageModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    display: grid;
+    grid-template-columns: auto;
+}
+.imageModal img {
+  width: 33vh;
+  height: 33vh;
+  object-fit: cover;
+  margin: 0 auto;
+}
+img.preced {
+  width: 1em;
+  height: 1em;
+}
+img.suivan {
+  width: 1em;
+  height: 1em;
+}
+  .tgm {
+   
+    width: 80%;}
+
+    .filterSection {
+      margin: auto;
+      width: 50%;
+      padding: 2em;
+  }
+  .modal header img {
+    cursor: pointer;
+    width: 10%;
+}
+video {
+  width: 33vh;
+  height: 33vh;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+
 }
