@@ -77,18 +77,21 @@ export default class FilterSection {
     // Append elements to the filter section container
     this.filterSection.appendChild(this.filterLabel);
     this.filterSection.appendChild(this.dropdownContainer);
+
+    this.selectedValue =[];
+    this.filteredMedia = [];
   }
 
   // Handle the filter change event
   handleFilterChange() {
-    const selectedValue = this.dropdownOptions.querySelector('.selected').getAttribute('data-value');
+    this.selectedValue  = this.dropdownOptions.querySelector('.selected').getAttribute('data-value');
 
-    if (selectedValue === 'date') {
-      this.filterMediaByDate(filteredMedia);
-    } else if (selectedValue === 'title') {
-      this.filterMediaByTitle(filteredMedia);
-    } else if (selectedValue === 'popularity') {
-      this.filterMediaByPopularity(filteredMedia);
+    if (this.selectedValue  === 'date') {
+      this.filterMediaByDate(this.filteredMedia );
+    } else if (this.selectedValue  === 'title') {
+      this.filterMediaByTitle(this.filteredMedia );
+    } else if (this.selectedValue  === 'popularity') {
+      this.filterMediaByPopularity(this.filteredMedia );
     }
   }
 
@@ -120,13 +123,13 @@ export default class FilterSection {
 
     // Handle filter change event
     const handleFilterChange = () => {
-      const selectedValue = dropdownOptions.querySelector('.selected').getAttribute('data-value');
+      this.selectedValue  = dropdownOptions.querySelector('.selected').getAttribute('data-value');
 
-      if (selectedValue === 'date') {
+      if (this.selectedValue  === 'date') {
         this.filterMediaByDate(filteredMedia);
-      } else if (selectedValue === 'title') {
+      } else if (this.selectedValue  === 'title') {
         this.filterMediaByTitle(filteredMedia);
-      } else if (selectedValue === 'popularity') {
+      } else if (this.selectedValue  === 'popularity') {
         this.filterMediaByPopularity(filteredMedia);
       }
     };
@@ -140,7 +143,7 @@ export default class FilterSection {
     dropdownOptions.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         const selectedOption = dropdownOptions.querySelector('.selected');
-        const selectedValue = event.target.getAttribute('data-value');
+        this.selectedValue  = event.target.getAttribute('data-value');
         selectedOption.classList.remove('selected');
         event.target.classList.add('selected');
         dropdownLabel.textContent = event.target.textContent;
@@ -151,7 +154,7 @@ export default class FilterSection {
     dropdownOptions.addEventListener('click', function (event) {
       if (event.target.tagName === 'LI') {
         const selectedOption = dropdownOptions.querySelector('.selected');
-        const selectedValue = event.target.getAttribute('data-value');
+        this.selectedValue  = event.target.getAttribute('data-value');
 
         if (selectedOption !== event.target) {
           selectedOption.classList.remove('selected');

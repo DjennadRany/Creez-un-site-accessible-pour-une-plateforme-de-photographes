@@ -39,12 +39,19 @@ export default class PhotographerInfo {
     this.photographHeaderDiv.appendChild(this.contactButton);
     this.photographHeaderDiv.appendChild(this.portraitElement);
     this.photographHeaderDiv.appendChild(this.infoContainer);
+
+
+
+    this.firstName = null
+    this.lastName = null
+    this.mail = null
+    this.message = null
   }
  // Display the contact modal when the contact button is clicked
   displayModal() {
-    const contactModal = document.createElement('div');
-    contactModal.id = 'contactModal';
-
+ 
+    const contactModal = document.getElementById('contactModal');
+    contactModal.style.display = 'block';
     // Create the contact modal HTML content
     contactModal.innerHTML = `
       <div class="modal">
@@ -69,7 +76,7 @@ export default class PhotographerInfo {
             <label for="messageInput">Message</label>
             <textarea id="messageInput" tabindex="4"></textarea>
           </div>
-          <button class="contactButton" tabindex="5">Envoyer</button>
+          <button class="contactButton" id="contactButton" tabindex="5">Envoyer</button>
         </form>
       </div>
     `;
@@ -99,10 +106,7 @@ export default class PhotographerInfo {
 
      // Function to send the message when the form is submitted
     const sendMessage = () => {
-      const firstName = document.getElementById('firstNameInput').value;
-      const lastName = document.getElementById('lastNameInput').value;
-      const mail = document.getElementById('emailInput').value;
-      const message = document.getElementById('messageInput').value;
+
 
       // Add logic to send the message
       closeModal();
@@ -132,41 +136,41 @@ export default class PhotographerInfo {
     const validateForm = () => {
       clearErrors();
 
-      const firstName = document.getElementById('firstNameInput').value;
-      const lastName = document.getElementById('lastNameInput').value;
-      const mail = document.getElementById('emailInput').value;
-      const message = document.getElementById('messageInput').value;
+      this.firstName = document.getElementById('firstNameInput').value;
+      this.lastName = document.getElementById('lastNameInput').value;
+      this.mail = document.getElementById('emailInput').value;
+      this.message = document.getElementById('messageInput').value;
 
       const nameRegex = /^(?=.*[A-Za-zÀ-ÖØ-öø-ÿ])(?=\S+$).{2,}$/;
       const emailRegex = /^(?!\.)[a-zA-Z0-9._%+-]+@(?!-)[a-zA-Z0-9.-]+\.([a-zA-Z]{2,}|(?!-)[a-zA-Z0-9-]{2,})$/;
 
-      if (!nameRegex.test(firstName)) {
+      if (!nameRegex.test(this.firstName)) {
         displayError(document.getElementById('firstNameInput'), "Le prénom est invalide");
         return false;
       }
-      if (!nameRegex.test(lastName)) {
+      if (!nameRegex.test(this.lastName)) {
         displayError(document.getElementById('lastNameInput'), "Le nom est invalide");
         return false;
       }
 
 
-      if (!emailRegex.test(mail)) {
+      if (!emailRegex.test(this.mail)) {
         displayError(document.getElementById('emailInput'), "L'adresse email est invalide");
         return false;
       }
 
 
-      if (!nameRegex.test(message)) {
+      if (!nameRegex.test(this.message)) {
         displayError(document.getElementById('messageInput'), "Le message est invalide");
         return false;
       }
 
       
       sendMessage();
-      console.log('Prénom:', firstName);
-      console.log('Nom:', lastName);
-      console.log('Email:', mail);
-      console.log('Message:', message);
+      console.log('Prénom:', this.firstName);
+      console.log('Nom:', this.lastName);
+      console.log('Email:', this.mail);
+      console.log('Message:', this.message);
       return true;
     };
 
@@ -177,14 +181,5 @@ export default class PhotographerInfo {
     }
   }
 }
-// Function to close the contact modal
-const closeModal = () => {
-  const modal = document.getElementById('contactModal');
-  modal.style.display = 'none';
-};
 
-// Function to display the contact modal
-const displayModal = () => {
-  const modal = document.getElementById('contactModal');
-  modal.style.display = 'block';
-};
+

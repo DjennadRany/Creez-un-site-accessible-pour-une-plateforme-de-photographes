@@ -1,3 +1,4 @@
+/* eslint-env browser */
 // Class that represents a photographer element factory
 class PhotographerFactory {
   static createPhotographerElement(item) {
@@ -35,16 +36,21 @@ class PhotographerFactory {
 class AllPhotographers {
   constructor() {
     this.photographerSection = document.querySelector('.photographerSection');
+    this.response = [];
+    this.photographersData = [];
+    this.item = [];
+    this.photographerElement = [];
+    this.allPhotographers = [];
   }
 
   // Asynchronously fetch photographers' data from a JSON file
   async fetchPhotographersData() {
     try {
-      const response = await fetch('./data/photographers.json');
-      if (!response.ok) {
-        throw new Error('Looks like there was a problem. Status Code: ' + response.status);
+      this.response = await fetch('./data/photographers.json');
+      if (!this.response.ok) {
+        throw new Error('Looks like there was a problem. Status Code: ' + this.response.status);
       }
-      const data = await response.json();
+      const data = await this.response.json();
       return data.photographers;
     } catch (error) {
       console.log('Fetch Error :-S', error);
@@ -53,14 +59,14 @@ class AllPhotographers {
 
   // Asynchronously render photographers on the page
   async renderPhotographers() {
-    const photographersData = await this.fetchPhotographersData();
-    photographersData.forEach(item => {
-      const photographerElement = PhotographerFactory.createPhotographerElement(item);
-      this.photographerSection.appendChild(photographerElement);
+    this.photographersData = await this.fetchPhotographersData();
+    this.photographersData.forEach(item => {
+      this.photographerElement = PhotographerFactory.createPhotographerElement(item);
+      this.photographerSection.appendChild(this.photographerElement);
     });
   }
 }
 
 // Create an instance of AllPhotographers and render the photographers
-const allPhotographers = new AllPhotographers();
-allPhotographers.renderPhotographers();
+this.allPhotographers = new AllPhotographers();
+this.allPhotographers.renderPhotographers();
