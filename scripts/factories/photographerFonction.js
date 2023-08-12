@@ -1,9 +1,8 @@
 import Article from '../module/articleModule.js ';
-import FilterSection from '../module/filterModule.js '; 
+import FilterSection from '../module/filterModule.js ';
 
 async function getPhotographers() {
   let filterContainer = null; // Declare filterContainer outside the try block
-
   try {
     const response = await fetch('./data/photographers.json'); // Fetching the photographers data from the JSON file
     const data = await response.json(); // Parsing the JSON data

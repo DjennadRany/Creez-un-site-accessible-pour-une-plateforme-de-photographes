@@ -2,7 +2,18 @@ export default class App {
   constructor() {
     this.photographers = [];
     this.PhotographerFactory = [];
+    this.url = window.location.href;
+    this.photographerId = parseInt(this.url.split('#')[1]);
+    this.idIndex = this.url.lastIndexOf('#');
+     // Implementation of photographer creation based on the data
+     this.photographer = { };
+
+     this.photographerMedia = {}
+     this.totalLikes = {}
+     this.tgmDiv = document.createElement('div');
   }
+
+
 
   // Method to get photographer information based on their ID
   getPhotographerById(photographerId) {
@@ -11,19 +22,17 @@ export default class App {
 
   // Method to get photographer information based on the ID in the URL
   getPhotographerInfoFromURL() {
-    const url = window.location.href;
-    const photographerId = parseInt(url.split('#')[1]);
-    return photographerId ? this.getPhotographerById(photographerId) : null;
+  
+    this.photographerId
+    return this.photographerId ? this.getPhotographerById(this.photographerId) : null;
   }
 
   createPhotographer(photographerData) {
-    // Implementation of photographer creation based on the data
-    const photographer = {
-      id: photographerData.id,
+    this.photographer = {id: photographerData.id,
       name: photographerData.name,
       // Add other properties based on the photographer data structure
-    };
-    return photographer;
+    }
+    return this.photographer;
   }
 
   // Method to load photographers' data from the JSON file
@@ -32,7 +41,7 @@ export default class App {
       .then(response => response.json())
       .then(data => {
         this.photographers = data.photographers.map(photographerData => this.createPhotographer(photographerData));
-        const photographer = this.getPhotographerInfoFromURL();
+        this.photographer = this.getPhotographerInfoFromURL();
       })
       .catch(error => {
         console.log("An error occurred while fetching the JSON file:", error);
@@ -41,24 +50,21 @@ export default class App {
 
   // Method to display photographers' data
   displayPhotographersData() {
-    const url = window.location.href;
-    const idIndex = url.lastIndexOf('#');
-    const photographerId = url.substring(idIndex + 1);
     fetch('./data/photographers.json')
       .then(response => response.json())
       .then(data => {
-        const photographer = data.photographers.find(p => p.id === parseInt(photographerId));
+        const photographer = data.photographers.find(p => p.id === parseInt(this.photographerId));
         if (photographer) {
-          const photographerMedia = data.media.filter(media => media.photographerId === parseInt(photographerId));
-          const totalLikes = photographerMedia.reduce((accumulator, currentValue) => accumulator + currentValue.likes, 0);
-          const tgmDiv = document.createElement('div');
-          tgmDiv.classList.add('tgm');
+          this.photographerMedia = data.media.filter(media => media.photographerId === parseInt(this.photographerId));
+          this.totalLikes = this.photographerMedia.reduce((accumulator, currentValue) => accumulator + currentValue.likes, 0);
+          this.tgmDiv  
+          this.tgmDiv.classList.add('tgm');
           const content = `
-              <p class="totalLikes">${totalLikes} ❤</p>
+              <p class="totalLikes">${this.totalLikes} ❤</p>
               <p> ${photographer.price}€ /day </p>
             `;
-          tgmDiv.innerHTML = content;
-          document.body.appendChild(tgmDiv);
+          this.tgmDiv.innerHTML = content;
+          document.body.appendChild(this.tgmDiv);
         } else {
           console.log('Photographer not found');
         }

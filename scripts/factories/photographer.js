@@ -13,8 +13,8 @@ fetch('./data/photographers.json')
     photographers = data.photographers; // Store the photographers array from the JSON data
     photographer = getPhotographerInfoFromURL(); // Get the photographer information based on the ID in the URL
     if (photographer) {
-      const photographerInfo = new PhotographerInfo(photographer); // Create an instance of the PhotographerInfo class with the photographer's information
-      const apply = new App(photographer); // Create an instance of the App class with the photographer's information
+      new PhotographerInfo(photographer); // Create an instance of the PhotographerInfo class with the photographer's information
+      new App(photographer); // Create an instance of the App class with the photographer's information
     }
   })
   .catch(error => {
