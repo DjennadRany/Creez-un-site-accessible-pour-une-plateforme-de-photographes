@@ -46,6 +46,10 @@ export default class PhotographerInfo {
     this.lastName = null
     this.mail = null
     this.message = null
+
+   this.sendButton = null 
+   this.closeButton = null
+   this.firstNameInput = null
   }
  // Display the contact modal when the contact button is clicked
   displayModal() {
@@ -76,7 +80,7 @@ export default class PhotographerInfo {
             <label for="messageInput">Message</label>
             <textarea id="messageInput" tabindex="4"></textarea>
           </div>
-          <button class="contactButton" id="contactButton" tabindex="5">Envoyer</button>
+          <button class="contactButton open" id="contactSend" tabindex="5">Envoyer</button>
         </form>
       </div>
     `;
@@ -117,17 +121,17 @@ export default class PhotographerInfo {
     document.getElementById('contactModal').style.display = 'block';
 
     // Close modal button functionality
-    const closeButton = document.getElementById('closeModalButton');
-    closeButton.addEventListener('click', closeModal);
-    closeButton.addEventListener('keydown', (event) => {
+    this.closeButton = document.getElementById('closeModalButton');
+    this.closeButton.addEventListener('click', closeModal);
+    this.closeButton.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         closeModal();
       }
     });
 
     // Send button functionality for form validation and sending message
-    const sendButton = document.querySelector('#contactModal');
-    sendButton.addEventListener('click', (event) => {
+    this.sendButton = document.querySelector('#contactSend');
+    this.sendButton.addEventListener('click', (event) => {
       event.preventDefault();
       validateForm();
     });
@@ -143,6 +147,7 @@ export default class PhotographerInfo {
 
       const nameRegex = /^(?=.*[A-Za-zÀ-ÖØ-öø-ÿ])(?=\S+$).{2,}$/;
       const emailRegex = /^(?!\.)[a-zA-Z0-9._%+-]+@(?!-)[a-zA-Z0-9.-]+\.([a-zA-Z]{2,}|(?!-)[a-zA-Z0-9-]{2,})$/;
+      const messageRegex = /^(?:(?:\S+\s*){1,450})$/;
 
       if (!nameRegex.test(this.firstName)) {
         displayError(document.getElementById('firstNameInput'), "Le prénom est invalide");
@@ -160,7 +165,7 @@ export default class PhotographerInfo {
       }
 
 
-      if (!nameRegex.test(this.message)) {
+      if (!messageRegex.test(this.message)) {
         displayError(document.getElementById('messageInput'), "Le message est invalide");
         return false;
       }
@@ -175,11 +180,9 @@ export default class PhotographerInfo {
     };
 
     // Set focus on the first input field (First Name)
-    const firstNameInput = document.getElementById('firstNameInput');
-    if (firstNameInput) {
-      firstNameInput.focus();
+    this.firstNameInput = document.getElementById('firstNameInput');
+    if (this.firstNameInput) {
+      this.firstNameInput.focus();
     }
   }
-}
-
-
+  }
