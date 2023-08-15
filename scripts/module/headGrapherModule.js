@@ -2,7 +2,6 @@ export default class PhotographerInfo {
   constructor(photographer) {
      // Initialize the PhotographerInfo class with the given photographer data
     this.photographer = photographer;
-
     // Get the photograph header element and create the info container
     this.photographHeaderDiv = document.querySelector('.photographHeader');
     this.infoContainer = document.createElement('div');
@@ -50,94 +49,111 @@ export default class PhotographerInfo {
    this.sendButton = null 
    this.closeButton = null
    this.firstNameInput = null
+
+   this.sendButton = null;
+   this.closeModalFunction = null; 
   }
+
+
+
+
  // Display the contact modal when the contact button is clicked
-  displayModal() {
+ displayModal(closeModal) {
  
-    const contactModal = document.getElementById('contactModal');
-    contactModal.style.display = 'block';
-    // Create the contact modal HTML content
-    contactModal.innerHTML = `
-      <div class="modal">
-        <header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" id="closeModalButton" tabindex="6" />
-        </header>
-        <form>
-          <div>
-            <label for="firstNameInput">Prénom</label>
-            <input id="firstNameInput" tabindex="1" />
-          </div>
-          <div>
-            <label for="lastNameInput">Nom</label>
-            <input id="lastNameInput" tabindex="2" />
-          </div>
-          <div>
-            <label for="emailInput">E-mail</label>
-            <input type="email" id="emailInput" tabindex="3" />
-          </div>
-          <div>
-            <label for="messageInput">Message</label>
-            <textarea id="messageInput" tabindex="4"></textarea>
-          </div>
-          <button class="contactButton open" id="contactSend" tabindex="5">Envoyer</button>
-        </form>
-      </div>
-    `;
+  const contactModal = document.getElementById('contactModal');
+  contactModal.style.display = 'block';
+  // Create the contact modal HTML content
+  contactModal.innerHTML = `
+    <div class="modal">
+      <header>
+        <h2>Contactez-moi</h2>
+        <img src="assets/icons/close.svg" id="closeModalButton" tabindex="6" />
+      </header>
+      <form>
+        <div>
+          <label for="firstNameInput">Prénom</label>
+          <input id="firstNameInput" tabindex="1" />
+        </div>
+        <div>
+          <label for="lastNameInput">Nom</label>
+          <input id="lastNameInput" tabindex="2" />
+        </div>
+        <div>
+          <label for="emailInput">E-mail</label>
+          <input type="email" id="emailInput" tabindex="3" />
+        </div>
+        <div>
+          <label for="messageInput">Message</label>
+          <textarea id="messageInput" tabindex="4"></textarea>
+        </div>
+        <button class="contactButton open" id="contactSend" tabindex="5">Envoyer</button>
+      </form>
+    </div>
+  `;
+
+  this.closeModalFunction = this.closeModal.bind(this);
+ // Send button functionality for form validation and sending message
+ this.sendButton = document.querySelector('#contactSend');
+ this.sendButton.addEventListener('click', (event) => {
+   event.preventDefault();
+   this.validateForm(this.clearErrors.bind(this), this.displayError.bind(this), this.sendMessage.bind(this, this.closeModal.bind(this)));
+ });
+
+
+
+ // Append the contact modal to the document body and display it
+ document.body.appendChild(contactModal);
+ document.getElementById('contactModal').style.display = 'block';
+
+       // Close modal button functionality
+       this.closeButton = document.getElementById('closeModalButton');
+       this.closeButton.addEventListener('click', closeModal);
+       this.closeButton.addEventListener('keydown', (event) => {
+         if (event.key === 'Enter') {
+           closeModal();
+         }
+       });
+    
+
+
+}
 
     // Function to close the contact modal
-    const closeModal = () => {
+    closeModal() {
       const modal = document.getElementById('contactModal');
       modal.style.display = 'none';
-    };
+    }
+
 
     // Function to display an error message for form validation
-    const displayError = (inputElement, errorMessage) => {
+    displayError(inputElement, errorMessage){
       const errorElement = document.createElement('div');
       errorElement.classList.add('errorMessage');
       errorElement.textContent = errorMessage;
 
       inputElement.parentNode.insertBefore(errorElement, inputElement.nextSibling);
-    };
+    }
 
     // Function to clear all error messages
-    const clearErrors = () => {
+   clearErrors(){
       const errorMessages = document.querySelectorAll('.errorMessage');
       errorMessages.forEach((errorMessage) => {
         errorMessage.parentNode.removeChild(errorMessage);
       });
-    };
+    }
 
      // Function to send the message when the form is submitted
-    const sendMessage = () => {
+    sendMessage(closeModal) {
 
 
       // Add logic to send the message
       closeModal();
-    };
+    }
 
-      // Append the contact modal to the document body and display it
-    document.body.appendChild(contactModal);
-    document.getElementById('contactModal').style.display = 'block';
-
-    // Close modal button functionality
-    this.closeButton = document.getElementById('closeModalButton');
-    this.closeButton.addEventListener('click', closeModal);
-    this.closeButton.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') {
-        closeModal();
-      }
-    });
-
-    // Send button functionality for form validation and sending message
-    this.sendButton = document.querySelector('#contactSend');
-    this.sendButton.addEventListener('click', (event) => {
-      event.preventDefault();
-      validateForm();
-    });
+   
 
     // Form validation function
-    const validateForm = () => {
+    validateForm(clearErrors, displayError, sendMessage) {
       clearErrors();
 
       this.firstName = document.getElementById('firstNameInput').value;
@@ -170,19 +186,18 @@ export default class PhotographerInfo {
         return false;
       }
 
-      
+  
+
       sendMessage();
       console.log('Prénom:', this.firstName);
       console.log('Nom:', this.lastName);
       console.log('Email:', this.mail);
       console.log('Message:', this.message);
       return true;
-    };
-
-    // Set focus on the first input field (First Name)
-    this.firstNameInput = document.getElementById('firstNameInput');
-    if (this.firstNameInput) {
-      this.firstNameInput.focus();
     }
-  }
+
+
+
+
+
   }

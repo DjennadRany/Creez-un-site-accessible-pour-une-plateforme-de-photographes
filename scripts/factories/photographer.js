@@ -14,8 +14,9 @@ fetch('./data/photographers.json')
     photographer = getPhotographerInfoFromURL(); // Get the photographer information based on the ID in the URL
     if (photographer) {
       new PhotographerInfo(photographer); // Create an instance of the PhotographerInfo class with the photographer's information
-      new App(photographer); // Create an instance of the App class with the photographer's information
-    }
+     new App(photographer); // Create an instance of the App class with the photographer's information
+
+   }
   })
   .catch(error => {
     console.log("An error occurred while retrieving the JSON file:", error); // Log an error message if there's an issue with fetching or parsing the JSON
