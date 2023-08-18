@@ -30,6 +30,7 @@ export default class FilterSection {
     this.arrowUp = document.createElement('img');
     this.arrowUp.src = './assets/images/Vectorarrowup.png';
     this.arrowUp.classList.add('arrowUp');
+    this.arrowUp.setAttribute('alt', 'iconFilter');
     this.dropdownIcon.appendChild(this.arrowUp);
 
     // Create the dropdown options list
