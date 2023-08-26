@@ -22,6 +22,8 @@ export default class PhotographerInfo {
     this.taglineElement.textContent = photographer.tagline;
     this.contactButton = document.createElement('button');
     this.contactButton.classList.add('contactButton');
+    this.contactButton.setAttribute('aria-haspopup', 'dialog');
+    this.contactButton.setAttribute('aria-controls', 'dialog');
     this.contactButton.textContent = 'Contactez-moi';
     this.contactButton.onclick = this.displayModal.bind(this);
     this.portraitElement = document.createElement('img');
@@ -58,35 +60,41 @@ export default class PhotographerInfo {
 
 
  // Display the contact modal when the contact button is clicked
- displayModal(closeModal) {
+ displayModal() {
  
   const contactModal = document.getElementById('contactModal');
   contactModal.style.display = 'block';
   // Create the contact modal HTML content
   contactModal.innerHTML = `
-    <div class="modal">
+    <div class="modal" role="dialog" aria-labelledby="dialog-title"
+    aria-describedby="dialog-desc"
+    aria-modal="true"
+
+    tabindex="0">
       <header>
         <h2>Contactez-moi</h2>
-        <img src="assets/icons/close.svg" id="closeModalButton" tabindex="6" />
+        <img src="assets/icons/close.svg" alt="fermer modale" id="closeModalButton" tabindex="0 "  aria-label="Fermer"
+        title="Fermer cette fenêtre modale"
+        data-dismiss="dialog"/>
       </header>
       <form>
         <div>
-          <label for="firstNameInput">Prénom</label>
-          <input id="firstNameInput" tabindex="1" />
+          <label for="firstNameInput" role="dialog" >Prénom</label>
+          <input id="firstNameInput" tabindex="0" />
         </div>
         <div>
-          <label for="lastNameInput">Nom</label>
-          <input id="lastNameInput" tabindex="2" />
+          <label for="lastNameInput" role="dialog" >Nom</label>
+          <input id="lastNameInput" tabindex="0" />
         </div>
         <div>
-          <label for="emailInput">E-mail</label>
-          <input type="email" id="emailInput" tabindex="3" />
+          <label for="emailInput" role="dialog" >E-mail</label>
+          <input type="email" id="emailInput" tabindex="0" />
         </div>
         <div>
-          <label for="messageInput">Message</label>
-          <textarea id="messageInput" tabindex="4"></textarea>
+          <label for="messageInput" role="dialog" >Message</label>
+          <textarea id="messageInput" tabindex="0"></textarea>
         </div>
-        <button class="contactButton open" id="contactSend" tabindex="5">Envoyer</button>
+        <button class="contactButton open" id="contactSend" tabindex="0" role="dialog" >Envoyer</button>
       </form>
     </div>
   `;
@@ -106,11 +114,11 @@ export default class PhotographerInfo {
  document.getElementById('contactModal').style.display = 'block';
 
        // Close modal button functionality
-       this.closeButton = document.getElementById('closeModalButton');
-       this.closeButton.addEventListener('click', closeModal);
+       this.closeButton = document.querySelector('#closeModalButton');
+       this.closeButton.addEventListener('click', () => this.closeModal());
        this.closeButton.addEventListener('keydown', (event) => {
          if (event.key === 'Enter') {
-           closeModal();
+          this.closeModal();
          }
        });
     
@@ -120,8 +128,8 @@ export default class PhotographerInfo {
 
     // Function to close the contact modal
     closeModal() {
-      const modal = document.getElementById('contactModal');
-      modal.style.display = 'none';
+  document.querySelector('#contactModal').style.display = 'none';
+
     }
 
 
