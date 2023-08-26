@@ -133,13 +133,25 @@ export default class Article {
   openImageModal(index, filteredMedia) {
     const modal = document.createElement('div');
     modal.classList.add('imageModal');
-    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('tabindex', '0');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-labelledby', 'dialog-title');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-hidden', 'true');
+
 
     const modalImage = document.createElement('img');
     if (filteredMedia[index].image) {
       modalImage.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].image}`;
       modalImage.alt = filteredMedia[index].title;
       modalImage.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
+      modalImage.setAttribute('alt', `Image : ${filteredMedia[index].title}`);
+      modalImage.setAttribute('tabindex', '0');
+      modalImage.setAttribute('role', 'dialog');
+      modalImage.setAttribute('aria-labelledby', 'dialog-title');
+      modalImage.setAttribute('aria-modal', 'true');
+      modalImage.setAttribute('aria-hidden', 'true');
+      
     }
 
     const modalVideo = document.createElement('video');
@@ -147,6 +159,13 @@ export default class Article {
       modalVideo.src = `./assets/${filteredMedia[index].photographerId}/${filteredMedia[index].video}`;
       modalVideo.alt = filteredMedia[index].title;
       modalVideo.setAttribute('aria-label', `Video : ${filteredMedia[index].title}`);
+      modalVideo.setAttribute('alt', `Video : ${filteredMedia[index].title}`);
+      modalVideo.setAttribute('role', 'dialog');
+      modalVideo.setAttribute('tabindex', '0');
+      modalVideo.setAttribute('aria-labelledby', 'dialog-title');
+      modalVideo.setAttribute('aria-modal', 'true');
+      modalVideo.setAttribute('aria-hidden', 'true');
+
       modalVideo.controls = true;
       modalVideo.autoplay = true;
     }
@@ -155,10 +174,16 @@ export default class Article {
     const modalTitlesav = document.createElement('div');
     modalTitle.textContent = filteredMedia[index].title;
     modalTitle.classList.add('txtImgModal');
+    modalTitle.setAttribute('aria-label', `Image : ${filteredMedia[index].title}`);
+    modalTitle.setAttribute('alt', `Image : ${filteredMedia[index].title}`);
 
     // Add navigation buttons to view the previous or next media
     const prevButton = document.createElement('button');
     prevButton.classList.add('prevButton');
+    prevButton.setAttribute('alt', 'bouton précédent');
+    prevButton.setAttribute('aria-label', 'précédent');
+   
+
     prevButton.addEventListener('click', () => {
       const newIndex = (index - 1 + filteredMedia.length) % filteredMedia.length;
       this.closeModal();
@@ -172,6 +197,10 @@ export default class Article {
 
     const nextButton = document.createElement('button');
     nextButton.classList.add('nextButton');
+    nextButton.setAttribute('alt', 'bouton suivant');
+    nextButton.setAttribute('aria-label', 'suivant');
+
+   
     nextButton.addEventListener('click', () => {
       const newIndex = (index + 1) % filteredMedia.length;
       this.closeModal();
@@ -188,6 +217,7 @@ export default class Article {
     closeButton.classList.add('closeButton');
     closeButton.classList.add('fa-solid');
     closeButton.classList.add('fa-xmark');
+    closeButton.setAttribute('aria-label', 'fermé modale ');
     closeButton.addEventListener('click', () => {
       this.closeModal();
     });
